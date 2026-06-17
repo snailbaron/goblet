@@ -1,0 +1,18 @@
+module(name = "goblet")
+
+bazel_dep(name = "rules_go", version = "0.61.1")
+
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.from_file(go_mod = "//:go.mod")
+
+bazel_dep(name = "bazel_env.bzl", version = "0.7.2", dev_dependency = True)
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "golangci-lint",
+    build_file = "//bzl:external.BUILD.bazel",
+    integrity = "sha256-jfWA0mcP7Y+phKrAUHCZr43ydeZlIV9ceirjlDiTpVM=",
+    strip_prefix = "golangci-lint-2.12.2-linux-amd64",
+    url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-amd64.tar.gz",
+)

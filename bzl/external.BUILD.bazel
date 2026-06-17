@@ -1,0 +1,3 @@
+"""BUILD file for external non_Bazel repositories."""
+
+exports_files(glob(["**"]))

@@ -1,0 +1,9 @@
+load("@rules_go//docs/go/core:rules.bzl", "go_binary")
+
+go_binary(
+    name = "goblet",
+    srcs = glob(
+        ["*.go"],
+        ["*_test.go"],
+    ),
+)
