@@ -1,0 +1,38 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+cmake(
+    name = "sdl3",
+    cache_entries = {
+        "BUILD_SHARED_LIBS": "OFF",
+        "SDL_HIDAPI": "OFF",
+        "SDL_TEST_LIBRARY": "OFF",
+    },
+    generate_args = ["-GNinja"],
+    lib_source = "@sdl3//:files",
+    out_static_libs = ["libSDL3.a"],
+)
+
+cmake(
+    name = "sdl3_image",
+    cache_entries = {
+        "BUILD_SHARED_LIBS": "OFF",
+        "SDLIMAGE_AVIF": "OFF",
+        "SDLIMAGE_TIF": "OFF",
+        "SDLIMAGE_VENDORED": "ON",
+        "SDLIMAGE_WEBP": "OFF",
+    },
+    generate_args = ["-GNinja"],
+    lib_source = "@sdl3_image//:files",
+    out_static_libs = ["libSDL3_image.a"],
+)
+
+cmake(
+    name = "sdl3_ttf",
+    cache_entries = {
+        "BUILD_SHARED_LIBS": "OFF",
+        "SDLTTF_VENDORED": "ON",
+    },
+    generate_args = ["-GNinja"],
+    lib_source = "@sdl3_ttf//:files",
+    out_static_libs = ["libSDL3_ttf.a"],
+)

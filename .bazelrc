@@ -1,0 +1,1 @@
+build --host_conlyopt=-std=gnu99

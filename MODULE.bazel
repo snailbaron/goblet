@@ -1,5 +1,6 @@
 module(name = "goblet")
 
+bazel_dep(name = "rules_foreign_cc", version = "0.15.1")
 bazel_dep(name = "rules_go", version = "0.61.1")
 
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
@@ -9,10 +10,36 @@ bazel_dep(name = "bazel_env.bzl", version = "0.7.2", dev_dependency = True)
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+git_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
 http_archive(
     name = "golangci-lint",
     build_file = "//bzl:external.BUILD.bazel",
     integrity = "sha256-jfWA0mcP7Y+phKrAUHCZr43ydeZlIV9ceirjlDiTpVM=",
     strip_prefix = "golangci-lint-2.12.2-linux-amd64",
     url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-amd64.tar.gz",
+)
+
+http_archive(
+    name = "sdl3",
+    build_file = "//bzl:external.BUILD.bazel",
+    integrity = "sha256-ErNCgEFeyEGMhkQIuT0AiiCmUwaH7mE9YL+9IEEfJ4U=",
+    strip_prefix = "SDL3-3.4.10",
+    url = "https://github.com/libsdl-org/SDL/releases/download/release-3.4.10/SDL3-3.4.10.tar.gz",
+)
+
+git_repository(
+    name = "sdl3_image",
+    build_file = "//bzl:external.BUILD.bazel",
+    commit = "bec9134a26c7d0f31b36d6083c25296e04cabff5",  # release-3.4.4
+    recursive_init_submodules = True,
+    remote = "https://github.com/libsdl-org/SDL_image.git",
+)
+
+git_repository(
+    name = "sdl3_ttf",
+    build_file = "//bzl:external.BUILD.bazel",
+    commit = "a1ce3670aec736ecbf0936c43f2f0cc53aa61e5b",  # release-3.2.2
+    recursive_init_submodules = True,
+    remote = "https://github.com/libsdl-org/SDL_ttf.git",
 )
