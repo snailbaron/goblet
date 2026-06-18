@@ -1,5 +1,7 @@
 load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
 
+package(default_visibility = ["//:__subpackages__"])
+
 cmake(
     name = "sdl3",
     cache_entries = {

@@ -6,4 +6,5 @@ go_binary(
         ["*.go"],
         ["*_test.go"],
     ),
+    deps = ["//internal/sdl"],
 )

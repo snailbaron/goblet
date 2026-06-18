@@ -1,0 +1,17 @@
+load("@rules_go//docs/go/core:rules.bzl", "go_library")
+
+go_library(
+    name = "sdl",
+    srcs = glob(
+        ["*.go"],
+        ["*_test.go"],
+    ),
+    cdeps = [
+        "//deps:sdl3",
+        "//deps:sdl3_image",
+        "//deps:sdl3_ttf",
+    ],
+    cgo = True,
+    importpath = "github.com/snailbaron/goblet/internal/sdl",
+    visibility = ["//:__subpackages__"],
+)
