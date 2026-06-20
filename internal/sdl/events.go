@@ -246,7 +246,7 @@ type AudioDeviceEvent struct {
 	Which AudioDeviceID
 
 	// false if a playback device, true if a recording device.
-	recording bool
+	Recording bool
 }
 
 // # SDL_CameraDeviceEvent
@@ -1993,10 +1993,10 @@ type UserEvent struct {
 	Code int32
 
 	// User defined data pointer
-	Data1 *any
+	Data1 uintptr
 
 	// User defined data pointer
-	Data2 *any
+	Data2 uintptr
 }
 
 // # SDL_WindowEvent
@@ -2264,7 +2264,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 		return (*Event)(unsafe.Pointer(&AudioDeviceEvent{
 			Event:     common,
 			Which:     AudioDeviceID(e.which),
-			recording: bool(e.recording),
+			Recording: bool(e.recording),
 		}))
 	case t == EVENT_CAMERA_DEVICE_ADDED || t == EVENT_CAMERA_DEVICE_REMOVED ||
 		t == EVENT_CAMERA_DEVICE_APPROVED || t == EVENT_CAMERA_DEVICE_DENIED:
@@ -2292,8 +2292,8 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Event:    common,
 			WindowID: WindowID(e.windowID),
 			Code:     int32(e.code),
-			Data1:    (*any)(e.data1),
-			Data2:    (*any)(e.data2),
+			Data1:    uintptr(e.data1),
+			Data2:    uintptr(e.data2),
 		}))
 	case t == EVENT_FINGER_DOWN || t == EVENT_FINGER_UP ||
 		t == EVENT_FINGER_MOTION || t == EVENT_FINGER_CANCELED:
