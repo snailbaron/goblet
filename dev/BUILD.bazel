@@ -1,4 +1,5 @@
 load("@bazel_env.bzl", "bazel_env")
+load("@rules_go//go:def.bzl", "TOOLS_NOGO", "nogo")
 
 bazel_env(
     name = "env",
@@ -6,4 +7,10 @@ bazel_env(
         "go": "@rules_go//go",
         "golangci-lint": "@golangci-lint//:golangci-lint",
     },
+)
+
+nogo(
+    name = "nogo",
+    visibility = ["//visibility:public"],
+    deps = TOOLS_NOGO,
 )
