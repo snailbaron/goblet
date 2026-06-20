@@ -79,7 +79,7 @@ func (rr *Renderer) SetDrawColor(r, g, b, a uint8) error {
 	return nil
 }
 
-func PollEvent() (Event, bool) {
+func PollEvent() (*Event, bool) {
 	var e C.SDL_Event
 	if !C.SDL_PollEvent(&e) {
 		return nil, false

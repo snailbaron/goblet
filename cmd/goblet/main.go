@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"time"
 
 	"github.com/snailbaron/goblet/internal/sdl"
 )
@@ -25,11 +24,7 @@ func main() {
 	}
 	defer renderer.Destroy()
 
-	fps := 60
-	frameDuration := time.Duration(int64(time.Second) / int64(fps))
-	lastFrame := 0
-
-	start := time.Now()
+	timer := NewFrameTimer(60)
 	for {
 		done := false
 		for !done {
@@ -38,9 +33,14 @@ func main() {
 				break
 			}
 
-			switch e.(type) {
-			case sdl.QuitEvent:
+			switch e.Type {
+			case sdl.EVENT_QUIT:
 				done = true
+			case sdl.EVENT_KEY_DOWN:
+				k := e.Key()
+				if k.Key == sdl.SDLK_ESCAPE {
+					done = true
+				}
 			}
 		}
 
@@ -48,19 +48,13 @@ func main() {
 			break
 		}
 
-		now := time.Now()
-		frame := int(now.Sub(start) / frameDuration)
-		framesPassed := frame - lastFrame
-		lastFrame = frame
-
-		if framesPassed > 0 {
+		if framesPassed := timer.Cutoff(); framesPassed > 0 {
 			for range framesPassed {
 				renderer.SetDrawColor(30, 30, 30, 255)
 				renderer.Clear()
 			}
 		}
 
-		nextFrameTime := start.Add(time.Duration(frame + 1) * frameDuration)
-		time.Sleep(nextFrameTime.Sub(now))
+		timer.Relax()
 	}
 }
