@@ -22,12 +22,8 @@ type Event struct {
 }
 
 func cast[T any](e *Event) *T {
-	switch t := e.internal.(type) {
-	case *T:
-		return t
-	default:
-		return nil
-	}
+	t, _ := e.internal.(*T)
+	return t
 }
 
 func (e *Event) Display() *DisplayEvent {
