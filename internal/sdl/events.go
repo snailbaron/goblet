@@ -178,97 +178,49 @@ func (e *Event) Clipboard() *ClipboardEvent {
 	return cast[ClipboardEvent](e)
 }
 
-// # SDL_AudioDeviceEvent
+// AudioDeviceEvent is an audio device event structure (event.adevice.*).
 //
-// Audio device event structure (event.adevice.*)
-//
-// # Header File
+// [EVENT_AUDIO_DEVICE_ADDED], or [EVENT_AUDIO_DEVICE_REMOVED], or
+// [EVENT_AUDIO_DEVICE_FORMAT_CHANGED]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_AudioDeviceEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_AUDIO_DEVICE_ADDED, or SDL_EVENT_AUDIO_DEVICE_REMOVED, or SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_AudioDeviceID which;       /**< SDL_AudioDeviceID for the device being added or removed or changing */
-//	    bool recording; /**< false if a playback device, true if a recording device. */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	    Uint8 padding3;
-//	} SDL_AudioDeviceEvent;
-//
-// # Remarks
-//
-// Note that SDL will send a
-// [SDL_EVENT_AUDIO_DEVICE_ADDED](SDL_EVENT_AUDIO_DEVICE_ADDED) event for
-// every device it discovers during initialization. After that, this event
-// will only arrive when a device is hotplugged during the program's run.
-//
-// # Version
+// Note that SDL will send a [EVENT_AUDIO_DEVICE_ADDED] event for every device
+// it discovers during initialization. After that, this event will only arrive
+// when a device is hotplugged during the program's run.
 //
 // This struct is available since SDL 3.2.0.
 //
 // [<SDL3/SDL_events.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h
 type AudioDeviceEvent struct {
-	// SDL_AudioDeviceID for the device being added or removed or changing
+	// AudioDeviceID for the device being added or removed or changing
 	Which AudioDeviceID
 
 	// false if a playback device, true if a recording device.
 	Recording bool
 }
 
-// # SDL_CameraDeviceEvent
+// CameraDeviceEvent is a camera device event structure (event.cdevice.*).
 //
-// Camera device event structure (event.cdevice.*)
-//
-// # Header File
+// [EVENT_CAMERA_DEVICE_ADDED], [EVENT_CAMERA_DEVICE_REMOVED],
+// [EVENT_CAMERA_DEVICE_APPROVED], [EVENT_CAMERA_DEVICE_DENIED]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_CameraDeviceEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_CAMERA_DEVICE_ADDED, SDL_EVENT_CAMERA_DEVICE_REMOVED, SDL_EVENT_CAMERA_DEVICE_APPROVED, SDL_EVENT_CAMERA_DEVICE_DENIED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_CameraID which;       /**< SDL_CameraID for the device being added or removed or changing */
-//	} SDL_CameraDeviceEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
 // [<SDL3/SDL_events.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h
 type CameraDeviceEvent struct {
-	// SDL_CameraID for the device being added or removed or changing
+	// CameraID for the device being added or removed or changing
 	Which CameraID
 }
 
-// # SDL_ClipboardEvent
+// ClipboardEvent is an event triggered when the clipboard contents have
+// changed (event.clipboard.*).
 //
-// An event triggered when the clipboard contents have changed (event.clipboard.*)
-//
-// # Header File
+// [EVENT_CLIPBOARD_UPDATE]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_ClipboardEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_CLIPBOARD_UPDATE */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    bool owner;         /**< are we owning the clipboard (internal update) */
-//	    Sint32 num_mime_types;   /**< number of mime types */
-//	    const char **mime_types; /**< current mime types */
-//	} SDL_ClipboardEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -281,58 +233,27 @@ type ClipboardEvent struct {
 	MIMETypes []string
 }
 
-// # SDL_CommonEvent
+// CommonEvent defines fields shared by every event.
 //
-// Fields shared by every event.
-//
-// # Header File
-//
-// Defined in [<SDL3/SDL_events.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h)
-//
-// # Syntax
-//
-//	typedef struct SDL_CommonEvent
-//	{
-//	    Uint32 type;        /**< Event type, shared with all events, Uint32 to cover user events which are not in the SDL_EventType enumeration */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	} SDL_CommonEvent;
-//
-// # Version
+// Defined in [<SDL3/SDL_events.h>]
 //
 // This struct is available since SDL 3.2.0.
 //
 // [<SDL3/SDL_events.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h
 type CommonEvent struct {
-	// CommonEvent type, shared with all events, Uint32 to cover user events which
-	// are not in the SDL_EventType enumeration
+	// CommonEvent type, shared with all events, Uint32 to cover user events
+	// which are not in the EventType enumeration
 	Type EventType
 
-	// In nanoseconds, populated using SDL_GetTicksNS()
+	// In nanoseconds, populated using GetTicksNS()
 	Timestamp uint64
 }
 
-// # SDL_DisplayEvent
+// DisplayEvent contains display state change event data (event.display.*).
 //
-// Display state change event data (event.display.*)
-//
-// # Header File
+// EVENT_DISPLAY_*
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_DisplayEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_DISPLAY_* */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_DisplayID displayID;/**< The associated display */
-//	    Sint32 data1;       /**< event dependent data */
-//	    Sint32 data2;       /**< event dependent data */
-//	} SDL_DisplayEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -348,29 +269,13 @@ type DisplayEvent struct {
 	Data2 int32
 }
 
-// # SDL_DropEvent
+// DropEvent is an event used to drop text or request a file open by the system
+// (event.drop.*).
 //
-// An event used to drop text or request a file open by the system (event.drop.*)
-//
-// # Header File
+// [EVENT_DROP_BEGIN] or [EVENT_DROP_FILE] or [EVENT_DROP_TEXT] or
+// [EVENT_DROP_COMPLETE] or [EVENT_DROP_POSITION]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_DropEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_DROP_BEGIN or SDL_EVENT_DROP_FILE or SDL_EVENT_DROP_TEXT or SDL_EVENT_DROP_COMPLETE or SDL_EVENT_DROP_POSITION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID;    /**< The window that was dropped on, if any */
-//	    float x;            /**< X coordinate, relative to window (not on begin) */
-//	    float y;            /**< Y coordinate, relative to window (not on begin) */
-//	    const char *source; /**< The source app that sent this drop event, or NULL if that isn't available */
-//	    const char *data;   /**< The text for SDL_EVENT_DROP_TEXT and the file name for SDL_EVENT_DROP_FILE, NULL for other events */
-//	} SDL_DropEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -389,36 +294,17 @@ type DropEvent struct {
 	// available
 	Source string
 
-	// The text for SDL_EVENT_DROP_TEXT and the file name for
-	// SDL_EVENT_DROP_FILE, NULL for other events
+	// The text for EVENT_DROP_TEXT and the file name for EVENT_DROP_FILE, NULL
+	// for other events
 	Data string
 }
 
-// # SDL_GamepadAxisEvent
+// GamepadAxisEvent defines gamepad axis motion event structure
+// (event.gaxis.*).
 //
-// Gamepad axis motion event structure (event.gaxis.*)
-//
-// # Header File
+// [EVENT_GAMEPAD_AXIS_MOTION]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_GamepadAxisEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_GAMEPAD_AXIS_MOTION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Uint8 axis;         /**< The gamepad axis (SDL_GamepadAxis) */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	    Uint8 padding3;
-//	    Sint16 value;       /**< The axis value (range: -32768 to 32767) */
-//	    Uint16 padding4;
-//	} SDL_GamepadAxisEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -427,36 +313,18 @@ type GamepadAxisEvent struct {
 	// The joystick instance id
 	Which JoystickID
 
-	// The gamepad axis (SDL_GamepadAxis)
-	Axis uint8
+	// The gamepad axis
+	Axis GamepadAxis
 
 	// The axis value (range: -32768 to 32767)
 	Value int16
 }
 
-// # SDL_GamepadButtonEvent
+// GamepadButtonEvent is a gamepad button event structure (event.gbutton.*).
 //
-// Gamepad button event structure (event.gbutton.*)
-//
-// # Header File
+// [EVENT_GAMEPAD_BUTTON_DOWN] or [EVENT_GAMEPAD_BUTTON_UP]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_GamepadButtonEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_GAMEPAD_BUTTON_DOWN or SDL_EVENT_GAMEPAD_BUTTON_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Uint8 button;       /**< The gamepad button (SDL_GamepadButton) */
-//	    bool down;      /**< true if the button is pressed */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	} SDL_GamepadButtonEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -465,46 +333,31 @@ type GamepadButtonEvent struct {
 	// The joystick instance id
 	Which JoystickID
 
-	// The gamepad button (SDL_GamepadButton)
+	// The gamepad button (GamepadButton)
 	Button uint8
 
 	// true if the button is pressed
 	Down bool
 }
 
-// # SDL_GamepadDeviceEvent
+// GamepadDeviceEvent is a gamepad device event structure (event.gdevice.*).
 //
-// Gamepad device event structure (event.gdevice.*)
-//
-// # Header File
+// [EVENT_GAMEPAD_ADDED], [EVENT_GAMEPAD_REMOVED], or
+// [EVENT_GAMEPAD_REMAPPED], [EVENT_GAMEPAD_UPDATE_COMPLETE] or
+// [EVENT_GAMEPAD_STEAM_HANDLE_UPDATED]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
+// Joysticks that are supported gamepads receive both an [JoyDeviceEvent] and
+// an [GamepadDeviceEvent].
 //
-//	typedef struct SDL_GamepadDeviceEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_GAMEPAD_ADDED, SDL_EVENT_GAMEPAD_REMOVED, or SDL_EVENT_GAMEPAD_REMAPPED, SDL_EVENT_GAMEPAD_UPDATE_COMPLETE or SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which;       /**< The joystick instance id */
-//	} SDL_GamepadDeviceEvent;
-//
-// # Remarks
-//
-// Joysticks that are supported gamepads receive both an
-// [SDL_JoyDeviceEvent](SDL_JoyDeviceEvent) and an
-// [SDL_GamepadDeviceEvent](SDL_GamepadDeviceEvent).
-//
-// SDL will send GAMEPAD_ADDED events for joysticks that are already plugged
-// in during [SDL_Init](SDL_Init)() and are recognized as gamepads. It will
-// also send events for joysticks that get gamepad mappings at runtime.
-//
-// # Version
+// SDL will send [EVENT_GAMEPAD_ADDED] events for joysticks that are already
+// plugged in during [Init]() and are recognized as gamepads. It will also send
+// events for joysticks that get gamepad mappings at runtime.
 //
 // This struct is available since SDL 3.2.0.
 //
-// # See Also
+// See Also:
 //
 //   - [JoyDeviceEvent]
 //
@@ -514,28 +367,11 @@ type GamepadDeviceEvent struct {
 	Which JoystickID
 }
 
-// # SDL_GamepadSensorEvent
+// GamepadSensorEvent is a gamepad sensor event structure (event.gsensor.*).
 //
-// Gamepad sensor event structure (event.gsensor.*)
-//
-// # Header File
+// [EVENT_GAMEPAD_SENSOR_UPDATE]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_GamepadSensorEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_GAMEPAD_SENSOR_UPDATE */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Sint32 sensor;      /**< The type of the sensor, one of the values of SDL_SensorType */
-//	    float data[3];      /**< Up to 3 values from the sensor, as defined in SDL_sensor.h */
-//	    Uint64 sensor_timestamp; /**< The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock */
-//	} SDL_GamepadSensorEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -544,8 +380,8 @@ type GamepadSensorEvent struct {
 	// The joystick instance id
 	Which JoystickID
 
-	// The type of the sensor, one of the values of SDL_SensorType
-	Sensor int32
+	// The type of the sensor, one of the values of SensorType
+	Sensor SensorType
 
 	// Up to 3 values from the sensor, as defined in SDL_sensor.h
 	Data [3]float32
@@ -555,30 +391,13 @@ type GamepadSensorEvent struct {
 	SensorTimestamp uint64
 }
 
-// # SDL_GamepadTouchpadEvent
+// GamepadTouchpadEvent is a gamepad touchpad event structure
+// (event.gtouchpad.*).
 //
-// Gamepad touchpad event structure (event.gtouchpad.*)
-//
-// # Header File
+// [EVENT_GAMEPAD_TOUCHPAD_DOWN] or [EVENT_GAMEPAD_TOUCHPAD_MOTION] or
+// [EVENT_GAMEPAD_TOUCHPAD_UP].
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_GamepadTouchpadEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN or SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION or SDL_EVENT_GAMEPAD_TOUCHPAD_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Sint32 touchpad;    /**< The index of the touchpad */
-//	    Sint32 finger;      /**< The index of the finger on the touchpad */
-//	    float x;            /**< Normalized in the range 0...1 with 0 being on the left */
-//	    float y;            /**< Normalized in the range 0...1 with 0 being at the top */
-//	    float pressure;     /**< Normalized in the range 0...1 */
-//	} SDL_GamepadTouchpadEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -603,31 +422,11 @@ type GamepadTouchpadEvent struct {
 	Pressure float32
 }
 
-// # SDL_JoyAxisEvent
+// JoyAxisEvent is a joystick axis motion event structure (event.jaxis.*).
 //
-// Joystick axis motion event structure (event.jaxis.*)
-//
-// # Header File
+// [EVENT_JOYSTICK_AXIS_MOTION]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_JoyAxisEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_JOYSTICK_AXIS_MOTION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Uint8 axis;         /**< The joystick axis index */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	    Uint8 padding3;
-//	    Sint16 value;       /**< The axis value (range: -32768 to 32767) */
-//	    Uint16 padding4;
-//	} SDL_JoyAxisEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -643,31 +442,11 @@ type JoyAxisEvent struct {
 	Value int16
 }
 
-// # SDL_JoyBallEvent
+// JoyBallEvent is a joystick trackball motion event structure (event.jball.*).
 //
-// Joystick trackball motion event structure (event.jball.*)
-//
-// # Header File
+// [EVENT_JOYSTICK_BALL_MOTION]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_JoyBallEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_JOYSTICK_BALL_MOTION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Uint8 ball;         /**< The joystick trackball index */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	    Uint8 padding3;
-//	    Sint16 xrel;        /**< The relative motion in the X direction */
-//	    Sint16 yrel;        /**< The relative motion in the Y direction */
-//	} SDL_JoyBallEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -686,27 +465,12 @@ type JoyBallEvent struct {
 	Yrel int16
 }
 
-// # SDL_JoyBatteryEvent
+// JoyBatteryEvent is a joystick battery level change event structure
+// (event.jbattery.*).
 //
-// Joystick battery level change event structure (event.jbattery.*)
-//
-// # Header File
+// [EVENT_JOYSTICK_BATTERY_UPDATED]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_JoyBatteryEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_JOYSTICK_BATTERY_UPDATED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    SDL_PowerState state; /**< The joystick battery state */
-//	    int percent;          /**< The joystick battery percent charge remaining */
-//	} SDL_JoyBatteryEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -722,29 +486,11 @@ type JoyBatteryEvent struct {
 	Percent int
 }
 
-// # SDL_JoyButtonEvent
+// JoyButtonEvent is a joystick button event structure (event.jbutton.*).
 //
-// Joystick button event structure (event.jbutton.*)
-//
-// # Header File
+// [EVENT_JOYSTICK_BUTTON_DOWN] or [EVENT_JOYSTICK_BUTTON_UP]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_JoyButtonEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_JOYSTICK_BUTTON_DOWN or SDL_EVENT_JOYSTICK_BUTTON_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Uint8 button;       /**< The joystick button index */
-//	    bool down;      /**< true if the button is pressed */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	} SDL_JoyButtonEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -760,34 +506,19 @@ type JoyButtonEvent struct {
 	Down bool
 }
 
-// # SDL_JoyDeviceEvent
+// JoyDeviceEvent is a joystick device event structure (event.jdevice.*).
 //
-// Joystick device event structure (event.jdevice.*)
-//
-// # Header File
+// [EVENT_JOYSTICK_ADDED] or [EVENT_JOYSTICK_REMOVED] or
+// [EVENT_JOYSTICK_UPDATE_COMPLETE]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_JoyDeviceEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_JOYSTICK_ADDED or SDL_EVENT_JOYSTICK_REMOVED or SDL_EVENT_JOYSTICK_UPDATE_COMPLETE */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which;       /**< The joystick instance id */
-//	} SDL_JoyDeviceEvent;
-//
-// # Remarks
-//
 // SDL will send JOYSTICK_ADDED events for devices that are already plugged in
-// during [SDL_Init](SDL_Init).
-//
-// # Version
+// during [Init].
 //
 // This struct is available since SDL 3.2.0.
 //
-// # See Also
+// See Also:
 //
 //   - [GamepadDeviceEvent]
 //
@@ -797,35 +528,12 @@ type JoyDeviceEvent struct {
 	Which JoystickID
 }
 
-// # SDL_JoyHatEvent
+// JoyHatEvent is a joystick hat position change event structure
+// (event.jhat.*).
 //
-// Joystick hat position change event structure (event.jhat.*)
-//
-// # Header File
+// [EVENT_JOYSTICK_HAT_MOTION]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_JoyHatEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_JOYSTICK_HAT_MOTION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_JoystickID which; /**< The joystick instance id */
-//	    Uint8 hat;          /**< The joystick hat index */
-//	    Uint8 value;        /**< The hat position value.
-//	                         *   \sa SDL_HAT_LEFTUP SDL_HAT_UP SDL_HAT_RIGHTUP
-//	                         *   \sa SDL_HAT_LEFT SDL_HAT_CENTERED SDL_HAT_RIGHT
-//	                         *   \sa SDL_HAT_LEFTDOWN SDL_HAT_DOWN SDL_HAT_RIGHTDOWN
-//	                         *
-//	                         *   Note that zero means the POV is centered.
-//	                         */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	} SDL_JoyHatEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -843,25 +551,11 @@ type JoyHatEvent struct {
 	Value JoystickHat
 }
 
-// # SDL_KeyboardDeviceEvent
+// KeyboardDeviceEvent is a keyboard device event structure (event.kdevice.*).
 //
-// Keyboard device event structure (event.kdevice.*)
-//
-// # Header File
+// [EVENT_KEYBOARD_ADDED] or [EVENT_KEYBOARD_REMOVED]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_KeyboardDeviceEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_KEYBOARD_ADDED or SDL_EVENT_KEYBOARD_REMOVED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_KeyboardID which;   /**< The keyboard instance id */
-//	} SDL_KeyboardDeviceEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -871,46 +565,21 @@ type KeyboardDeviceEvent struct {
 	Which KeyboardID
 }
 
-// # SDL_KeyboardEvent
+// KeyboardEvent is a keyboard button event structure (event.key.*).
 //
-// Keyboard button event structure (event.key.*)
-//
-// # Header File
+// [EVENT_KEY_DOWN] or [EVENT_KEY_UP]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_KeyboardEvent
-//	{
-//	    SDL_EventType type;     /**< SDL_EVENT_KEY_DOWN or SDL_EVENT_KEY_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;       /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID;  /**< The window with keyboard focus, if any */
-//	    SDL_KeyboardID which;   /**< The keyboard instance id, or 0 if unknown or virtual */
-//	    SDL_Scancode scancode;  /**< SDL physical key code */
-//	    SDL_Keycode key;        /**< SDL virtual key code */
-//	    SDL_Keymod mod;         /**< current key modifiers */
-//	    Uint16 raw;             /**< The platform dependent scancode for this event */
-//	    bool down;              /**< true if the key is pressed */
-//	    bool repeat;            /**< true if this is a key repeat */
-//	} SDL_KeyboardEvent;
-//
-// # Remarks
-//
-// The `key` is the base [SDL_Keycode](SDL_Keycode) generated by pressing the
-// `scancode` using the current keyboard layout, applying any options
-// specified in [SDL_HINT_KEYCODE_OPTIONS](SDL_HINT_KEYCODE_OPTIONS). You can
-// get the [SDL_Keycode](SDL_Keycode) corresponding to the event scancode and
-// modifiers directly from the keyboard layout, bypassing
-// [SDL_HINT_KEYCODE_OPTIONS](SDL_HINT_KEYCODE_OPTIONS), by calling
-// [SDL_GetKeyFromScancode](SDL_GetKeyFromScancode)().
-//
-// # Version
+// The `key` is the base [Keycode] generated by pressing the `scancode` using
+// the current keyboard layout, applying any options specified in
+// [HINT_KEYCODE_OPTIONS]. You can get the [Keycode] corresponding to the event
+// scancode and modifiers directly from the keyboard layout, bypassing
+// [HINT_KEYCODE_OPTIONS], by calling [GetKeyFromScancode]().
 //
 // This struct is available since SDL 3.2.0.
 //
-// # See Also
+// See Also:
 //
 //   - [GetKeyFromScancode]
 //   - [HINT_KEYCODE_OPTIONS]
@@ -942,32 +611,11 @@ type KeyboardEvent struct {
 	Repeat bool
 }
 
-// # SDL_MouseButtonEvent
+// MouseButtonEvent is a mouse button event structure (event.button.*).
 //
-// Mouse button event structure (event.button.*)
-//
-// # Header File
+// [EVENT_MOUSE_BUTTON_DOWN] or [EVENT_MOUSE_BUTTON_UP]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_MouseButtonEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_MOUSE_BUTTON_DOWN or SDL_EVENT_MOUSE_BUTTON_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with mouse focus, if any */
-//	    SDL_MouseID which;  /**< The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch events, or 0 */
-//	    Uint8 button;       /**< The mouse button index */
-//	    bool down;          /**< true if the button is pressed */
-//	    Uint8 clicks;       /**< 1 for single-click, 2 for double-click, etc. */
-//	    Uint8 padding;
-//	    float x;            /**< X coordinate, relative to window */
-//	    float y;            /**< Y coordinate, relative to window */
-//	} SDL_MouseButtonEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -976,8 +624,8 @@ type MouseButtonEvent struct {
 	// The window with mouse focus, if any
 	WindowID WindowID
 
-	// The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch
-	// events, or 0
+	// The mouse instance id in relative mode, TOUCH_MOUSEID for touch events,
+	// or 0
 	Which MouseID
 
 	// The mouse button index
@@ -996,25 +644,11 @@ type MouseButtonEvent struct {
 	Y float32
 }
 
-// # SDL_MouseDeviceEvent
+// MouseDeviceEvent is a mouse device event structure (event.mdevice.*).
 //
-// Mouse device event structure (event.mdevice.*)
-//
-// # Header File
+// [EVENT_MOUSE_ADDED] or [EVENT_MOUSE_REMOVED]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_MouseDeviceEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_MOUSE_ADDED or SDL_EVENT_MOUSE_REMOVED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_MouseID which;  /**< The mouse instance id */
-//	} SDL_MouseDeviceEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1024,31 +658,11 @@ type MouseDeviceEvent struct {
 	Which MouseID
 }
 
-// # SDL_MouseMotionEvent
+// MouseMotionEvent is a mouse motion event structure (event.motion.*).
 //
-// Mouse motion event structure (event.motion.*)
-//
-// # Header File
+// [EVENT_MOUSE_MOTION]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_MouseMotionEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_MOUSE_MOTION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with mouse focus, if any */
-//	    SDL_MouseID which;  /**< The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch events, SDL_PEN_MOUSEID for pen events, or 0 */
-//	    SDL_MouseButtonFlags state;       /**< The current button state */
-//	    float x;            /**< X coordinate, relative to window */
-//	    float y;            /**< Y coordinate, relative to window */
-//	    float xrel;         /**< The relative motion in the X direction */
-//	    float yrel;         /**< The relative motion in the Y direction */
-//	} SDL_MouseMotionEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1057,8 +671,8 @@ type MouseMotionEvent struct {
 	// The window with mouse focus, if any
 	WindowID WindowID
 
-	// The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch
-	// events, SDL_PEN_MOUSEID for pen events, or 0
+	// The mouse instance id in relative mode, TOUCH_MOUSEID for touch events,
+	// PEN_MOUSEID for pen events, or 0
 	Which MouseID
 
 	// The current button state
@@ -1077,33 +691,11 @@ type MouseMotionEvent struct {
 	Yrel float32
 }
 
-// # SDL_MouseWheelEvent
+// MouseWheelEvent is a mouse wheel event structure (event.wheel.*).
 //
-// Mouse wheel event structure (event.wheel.*)
-//
-// # Header File
+// [EVENT_MOUSE_WHEEL]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_MouseWheelEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_MOUSE_WHEEL */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with mouse focus, if any */
-//	    SDL_MouseID which;  /**< The mouse instance id in relative mode or 0 */
-//	    float x;            /**< The amount scrolled horizontally, positive to the right and negative to the left */
-//	    float y;            /**< The amount scrolled vertically, positive away from the user and negative toward the user */
-//	    SDL_MouseWheelDirection direction; /**< Set to one of the SDL_MOUSEWHEEL_* defines. When FLIPPED the values in X and Y will be opposite. Multiply by -1 to change them back */
-//	    float mouse_x;      /**< X coordinate, relative to window */
-//	    float mouse_y;      /**< Y coordinate, relative to window */
-//	    Sint32 integer_x;   /**< The amount scrolled horizontally, accumulated to whole scroll "ticks" (added in 3.2.12) */
-//	    Sint32 integer_y;   /**< The amount scrolled vertically, accumulated to whole scroll "ticks" (added in 3.2.12) */
-//	} SDL_MouseWheelEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1123,8 +715,8 @@ type MouseWheelEvent struct {
 	// toward the user
 	Y float32
 
-	// Set to one of the SDL_MOUSEWHEEL_* defines. When FLIPPED the values in X
-	// and Y will be opposite. Multiply by -1 to change them back
+	// Set to one of the MOUSEWHEEL_* defines. When FLIPPED the values in X and
+	// Y will be opposite. Multiply by -1 to change them back
 	Direction MouseWheelDirection
 
 	// X coordinate, relative to window
@@ -1142,36 +734,15 @@ type MouseWheelEvent struct {
 	IntegerY int32
 }
 
-// # SDL_PenAxisEvent
+// PenAxisEvent is a pressure-sensitive pen pressure / angle event structure
+// (event.paxis.*).
 //
-// Pressure-sensitive pen pressure / angle event structure (event.paxis.*)
-//
-// # Header File
+// [EVENT_PEN_AXIS]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_PenAxisEvent
-//	{
-//	    SDL_EventType type;     /**< SDL_EVENT_PEN_AXIS */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;       /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID;  /**< The window with pen focus, if any */
-//	    SDL_PenID which;        /**< The pen instance id */
-//	    SDL_PenInputFlags pen_state;   /**< Complete pen input state at time of event */
-//	    float x;                /**< X coordinate, relative to window */
-//	    float y;                /**< Y coordinate, relative to window */
-//	    SDL_PenAxis axis;       /**< Axis that has changed */
-//	    float value;            /**< New value of axis */
-//	} SDL_PenAxisEvent;
-//
-// # Remarks
-//
 // You might get some of these events even if the pen isn't touching the
 // tablet.
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1199,37 +770,15 @@ type PenAxisEvent struct {
 	Value float32
 }
 
-// # SDL_PenButtonEvent
+// PenButtonEvent is a pressure-sensitive pen button event structure
+// (event.pbutton.*).
 //
-// Pressure-sensitive pen button event structure (event.pbutton.*)
-//
-// # Header File
+// [EVENT_PEN_BUTTON_DOWN] or [EVENT_PEN_BUTTON_UP]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_PenButtonEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_PEN_BUTTON_DOWN or SDL_EVENT_PEN_BUTTON_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with mouse focus, if any */
-//	    SDL_PenID which;        /**< The pen instance id */
-//	    SDL_PenInputFlags pen_state;   /**< Complete pen input state at time of event */
-//	    float x;                /**< X coordinate, relative to window */
-//	    float y;                /**< Y coordinate, relative to window */
-//	    Uint8 button;       /**< The pen button index (first button is 1). */
-//	    bool down;      /**< true if the button is pressed */
-//	} SDL_PenButtonEvent;
-//
-// # Remarks
-//
 // This is for buttons on the pen itself that the user might click. The pen
-// itself pressing down to draw triggers a
-// [SDL_EVENT_PEN_DOWN](SDL_EVENT_PEN_DOWN) event instead.
-//
-// # Version
+// itself pressing down to draw triggers a [EVENT_PEN_DOWN] event instead.
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1257,38 +806,18 @@ type PenButtonEvent struct {
 	Down bool
 }
 
-// # SDL_PenMotionEvent
+// PenMotionEvent is a pressure-sensitive pen motion event structure
+// (event.pmotion.*).
 //
-// Pressure-sensitive pen motion event structure (event.pmotion.*)
-//
-// # Header File
+// [EVENT_PEN_MOTION]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_PenMotionEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_PEN_MOTION */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with pen focus, if any */
-//	    SDL_PenID which;        /**< The pen instance id */
-//	    SDL_PenInputFlags pen_state;   /**< Complete pen input state at time of event */
-//	    float x;                /**< X coordinate, relative to window */
-//	    float y;                /**< Y coordinate, relative to window */
-//	} SDL_PenMotionEvent;
-//
-// # Remarks
-//
 // Depending on the hardware, you may get motion events when the pen is not
-// touching a tablet, for tracking a pen even when it isn't drawing. You
-// should listen for [SDL_EVENT_PEN_DOWN](SDL_EVENT_PEN_DOWN) and
-// [SDL_EVENT_PEN_UP](SDL_EVENT_PEN_UP) events, or check `pen_state &
-// SDL_PEN_INPUT_DOWN` to decide if a pen is "drawing" when dealing with pen
+// touching a tablet, for tracking a pen even when it isn't drawing. You should
+// listen for [EVENT_PEN_DOWN] and [EVENT_PEN_UP] events, or check `pen_state &
+// PEN_INPUT_DOWN` to decide if a pen is "drawing" when dealing with pen
 // motion.
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1310,43 +839,25 @@ type PenMotionEvent struct {
 	Y float32
 }
 
-// # SDL_PenProximityEvent
+// PenProximityEvent is a pressure-sensitive pen proximity event structure
+// (event.pproximity.*).
 //
-// Pressure-sensitive pen proximity event structure (event.pproximity.*)
-//
-// # Header File
+// [EVENT_PEN_PROXIMITY_IN] or [EVENT_PEN_PROXIMITY_OUT]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_PenProximityEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_PEN_PROXIMITY_IN or SDL_EVENT_PEN_PROXIMITY_OUT */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with pen focus, if any */
-//	    SDL_PenID which;        /**< The pen instance id */
-//	} SDL_PenProximityEvent;
-//
-// # Remarks
-//
 // When a pen becomes visible to the system (it is close enough to a tablet,
-// etc), SDL will send an
-// [SDL_EVENT_PEN_PROXIMITY_IN](SDL_EVENT_PEN_PROXIMITY_IN) event with the new
-// pen's ID. This ID is valid until the pen leaves proximity again (has been
-// removed from the tablet's area, the tablet has been unplugged, etc). If the
-// same pen reenters proximity again, it will be given a new ID.
+// etc), SDL will send an [EVENT_PEN_PROXIMITY_IN] event with the new pen's ID.
+// This ID is valid until the pen leaves proximity again (has been removed from
+// the tablet's area, the tablet has been unplugged, etc). If the same pen
+// reenters proximity again, it will be given a new ID.
 //
-// Note that "proximity" means "close enough for the tablet to know the tool
-// is there." The pen touching and lifting off from the tablet while not
-// leaving the area are handled by [SDL_EVENT_PEN_DOWN](SDL_EVENT_PEN_DOWN)
-// and [SDL_EVENT_PEN_UP](SDL_EVENT_PEN_UP).
+// Note that "proximity" means "close enough for the tablet to know the tool is
+// there." The pen touching and lifting off from the tablet while not leaving
+// the area are handled by [EVENT_PEN_DOWN] and [EVENT_PEN_UP].
 //
 // Not all platforms have a window associated with the pen during proximity
 // events. Some wait until motion/button/etc events to offer this info.
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1359,36 +870,15 @@ type PenProximityEvent struct {
 	Which PenID
 }
 
-// # SDL_PenTouchEvent
+// PenTouchEvent is a pressure-sensitive pen touched event structure
+// (event.ptouch.*).
 //
-// Pressure-sensitive pen touched event structure (event.ptouch.*)
-//
-// # Header File
+// [EVENT_PEN_DOWN] or [EVENT_PEN_UP]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_PenTouchEvent
-//	{
-//	    SDL_EventType type;     /**< SDL_EVENT_PEN_DOWN or SDL_EVENT_PEN_UP */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;       /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID;  /**< The window with pen focus, if any */
-//	    SDL_PenID which;        /**< The pen instance id */
-//	    SDL_PenInputFlags pen_state;   /**< Complete pen input state at time of event */
-//	    float x;                /**< X coordinate, relative to window */
-//	    float y;                /**< Y coordinate, relative to window */
-//	    bool eraser;        /**< true if eraser end is used (not all pens support this). */
-//	    bool down;          /**< true if the pen is touching or false if the pen is lifted off */
-//	} SDL_PenTouchEvent;
-//
-// # Remarks
-//
 // These events come when a pen touches a surface (a tablet, etc), or lifts
 // off from one.
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1416,28 +906,15 @@ type PenTouchEvent struct {
 	Down bool
 }
 
-// # SDL_PinchFingerEvent
+// PinchFingerEvent is a pinch event structure (event.pinch.*).
 //
-// Pinch event structure (event.pinch.*)
-//
-// # Header File
+// [EVENT_PINCH_BEGIN] or [EVENT_PINCH_UPDATE] or [EVENT_PINCH_END]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_PinchFingerEvent
-//	{
-//	    SDL_EventType type; /**< ::SDL_EVENT_PINCH_BEGIN or ::SDL_EVENT_PINCH_UPDATE or ::SDL_EVENT_PINCH_END */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    float scale;        /**< The scale change since the last SDL_EVENT_PINCH_UPDATE. Scale < 1 is "zoom out". Scale > 1 is "zoom in". */
-//	    SDL_WindowID windowID; /**< The window underneath the finger, if any */
-//	} SDL_PinchFingerEvent;
-//
 // [<SDL3/SDL_events.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h
 type PinchFingerEvent struct {
-	// The scale change since the last SDL_EVENT_PINCH_UPDATE. Scale < 1 is
+	// The scale change since the last [EVENT_PINCH_UPDATE]. Scale < 1 is
 	// ``zoom out''. Scale > 1 is ``zoom in''.
 	Scale float32
 
@@ -1445,49 +922,23 @@ type PinchFingerEvent struct {
 	WindowID WindowID
 }
 
-// # SDL_QuitEvent
+// QuitEvent is the “quit requested” event.
 //
-// The "quit requested" event
-//
-// # Header File
+// [EVENT_QUIT]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_QuitEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_QUIT */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	} SDL_QuitEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
 // [<SDL3/SDL_events.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h
 type QuitEvent struct{}
 
-// # SDL_RenderEvent
+// RenderEvent is a renderer event structure (event.render.*).
 //
-// Renderer event structure (event.render.*)
-//
-// # Header File
+// [EVENT_RENDER_TARGETS_RESET], [EVENT_RENDER_DEVICE_RESET],
+// [EVENT_RENDER_DEVICE_LOST]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_RenderEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_RENDER_TARGETS_RESET, SDL_EVENT_RENDER_DEVICE_RESET, SDL_EVENT_RENDER_DEVICE_LOST */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window containing the renderer in question. */
-//	} SDL_RenderEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1497,27 +948,11 @@ type RenderEvent struct {
 	WindowID WindowID
 }
 
-// # SDL_SensorEvent
+// SensorEvent is a sensor event structure (event.sensor.*).
 //
-// Sensor event structure (event.sensor.*)
-//
-// # Header File
+// [EVENT_SENSOR_UPDATE]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_SensorEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_SENSOR_UPDATE */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_SensorID which; /**< The instance ID of the sensor */
-//	    float data[6];      /**< Up to 6 values from the sensor - additional values can be queried using SDL_GetSensorData() */
-//	    Uint64 sensor_timestamp; /**< The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock */
-//	} SDL_SensorEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1527,7 +962,7 @@ type SensorEvent struct {
 	Which SensorID
 
 	// Up to 6 values from the sensor - additional values can be queried using
-	// SDL_GetSensorData()
+	// GetSensorData()
 	Data [6]float32
 
 	// The timestamp of the sensor reading in nanoseconds, not necessarily
@@ -1535,32 +970,12 @@ type SensorEvent struct {
 	SensorTimestamp uint64
 }
 
-// # SDL_TextEditingCandidatesEvent
+// TextEditingCandidatesEvent is a keyboard IME candidates event structure
+// (event.edit_candidates.*).
 //
-// Keyboard IME candidates event structure (event.edit_candidates.*)
-//
-// # Header File
+// [EVENT_TEXT_EDITING_CANDIDATES]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_TextEditingCandidatesEvent
-//	{
-//	    SDL_EventType type;         /**< SDL_EVENT_TEXT_EDITING_CANDIDATES */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;           /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID;      /**< The window with keyboard focus, if any */
-//	    const char * const *candidates;    /**< The list of candidates, or NULL if there are no candidates available */
-//	    Sint32 num_candidates;      /**< The number of strings in `candidates` */
-//	    Sint32 selected_candidate;  /**< The index of the selected candidate, or -1 if no candidate is selected */
-//	    bool horizontal;          /**< true if the list is horizontal, false if it's vertical */
-//	    Uint8 padding1;
-//	    Uint8 padding2;
-//	    Uint8 padding3;
-//	} SDL_TextEditingCandidatesEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1579,34 +994,15 @@ type TextEditingCandidatesEvent struct {
 	Horizontal bool
 }
 
-// # SDL_TextEditingEvent
+// TextEditingEvent is a keyboard text editing event structure (event.edit.*).
 //
-// Keyboard text editing event structure (event.edit.*)
-//
-// # Header File
+// [EVENT_TEXT_EDITING]
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_TextEditingEvent
-//	{
-//	    SDL_EventType type;         /**< SDL_EVENT_TEXT_EDITING */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;           /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID;      /**< The window with keyboard focus, if any */
-//	    const char *text;           /**< The editing text */
-//	    Sint32 start;               /**< The start cursor of selected editing text, or -1 if not set */
-//	    Sint32 length;              /**< The length of selected editing text, or -1 if not set */
-//	} SDL_TextEditingEvent;
-//
-// # Remarks
 //
 // The start cursor is the position, in UTF-8 characters, where new typing
 // will be inserted into the editing text. The length is the number of UTF-8
 // characters that will be replaced by new typing.
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1625,36 +1021,18 @@ type TextEditingEvent struct {
 	Length int32
 }
 
-// # SDL_TextInputEvent
+// TextInputEvent is a keyboard text input event structure (event.text.*).
 //
-// Keyboard text input event structure (event.text.*)
-//
-// # Header File
+// [EVENT_TEXT_INPUT]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_TextInputEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_TEXT_INPUT */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The window with keyboard focus, if any */
-//	    const char *text;   /**< The input text, UTF-8 encoded */
-//	} SDL_TextInputEvent;
-//
-// # Remarks
-//
 // This event will never be delivered unless text input is enabled by calling
-// [SDL_StartTextInput](SDL_StartTextInput)(). Text input is disabled by
-// default!
-//
-// # Version
+// [StartTextInput](). Text input is disabled by default!
 //
 // This struct is available since SDL 3.2.0.
 //
-// # See Also
+// See Also:
 //
 //   - [StartTextInput]
 //   - [StopTextInput]
@@ -1668,32 +1046,12 @@ type TextInputEvent struct {
 	Text string
 }
 
-// # SDL_TouchFingerEvent
+// TouchFingerEvent is a touch finger event structure (event.tfinger.*).
 //
-// Touch finger event structure (event.tfinger.*)
+// [EVENT_FINGER_DOWN], [EVENT_FINGER_UP], [EVENT_FINGER_MOTION], or
+// [EVENT_FINGER_CANCELED]
 //
-// # Header File
-//
-// Defined in [<SDL3/SDL_events.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h)
-//
-// # Syntax
-//
-//	typedef struct SDL_TouchFingerEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_FINGER_DOWN, SDL_EVENT_FINGER_UP, SDL_EVENT_FINGER_MOTION, or SDL_EVENT_FINGER_CANCELED */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_TouchID touchID; /**< The touch device id */
-//	    SDL_FingerID fingerID;
-//	    float x;            /**< Normalized in the range 0...1 */
-//	    float y;            /**< Normalized in the range 0...1 */
-//	    float dx;           /**< Normalized in the range -1...1 */
-//	    float dy;           /**< Normalized in the range -1...1 */
-//	    float pressure;     /**< Normalized in the range 0...1 */
-//	    SDL_WindowID windowID; /**< The window underneath the finger, if any */
-//	} SDL_TouchFingerEvent;
-//
-// # Remarks
+// Defined in [<SDL3/SDL_events.h>]
 //
 // Coordinates in this event are normalized. `x` and `y` are normalized to a
 // range between 0.0f and 1.0f, relative to the window, so (0,0) is the top
@@ -1708,8 +1066,6 @@ type TextInputEvent struct {
 // negative value when the touch is in the letterboxing. Some platforms might
 // report a touch outside of the window, which will also be outside of the
 // range.
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -1739,40 +1095,22 @@ type TouchFingerEvent struct {
 	WindowID WindowID
 }
 
-// # SDL_UserEvent
+// UserEvent is a user-defined event type (event.user.*).
 //
-// A user-defined event type (event.user.*)
-//
-// # Header File
+// [EVENT_USER] through [EVENT_LAST], Uint32 because these are not in the
+// [EventType] enumeration
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// # Syntax
-//
-//	typedef struct SDL_UserEvent
-//	{
-//	    Uint32 type;        /**< SDL_EVENT_USER through SDL_EVENT_LAST, Uint32 because these are not in the SDL_EventType enumeration */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The associated window if any */
-//	    Sint32 code;        /**< User defined event code */
-//	    void *data1;        /**< User defined data pointer */
-//	    void *data2;        /**< User defined data pointer */
-//	} SDL_UserEvent;
-//
-// # Remarks
-//
 // This event is unique; it is never created by SDL, but only by the
 // application. The event can be pushed onto the event queue using
-// [SDL_PushEvent](SDL_PushEvent)(). The contents of the structure members are
-// completely up to the programmer; the only requirement is that “type” is
-// a value obtained from [SDL_RegisterEvents](SDL_RegisterEvents)().
-//
-// # Version
+// [PushEvent](). The contents of the structure members are completely up to
+// the programmer; the only requirement is that “type” is a value obtained from
+// [RegisterEvents]().
 //
 // This struct is available since SDL 3.2.0.
 //
-// # Code Examples
+// Code Examples
 //
 //	extern Sint32 my_event_code;
 //	extern void *significant_data;
@@ -1804,27 +1142,11 @@ type UserEvent struct {
 	Data2 uintptr
 }
 
-// # SDL_WindowEvent
+// WindowEvent is a window state change event data (event.window.*).
 //
-// Window state change event data (event.window.*)
-//
-// # Header File
+// EVENT_WINDOW_*
 //
 // Defined in [<SDL3/SDL_events.h>]
-//
-// # Syntax
-//
-//	typedef struct SDL_WindowEvent
-//	{
-//	    SDL_EventType type; /**< SDL_EVENT_WINDOW_* */
-//	    Uint32 reserved;
-//	    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-//	    SDL_WindowID windowID; /**< The associated window */
-//	    Sint32 data1;       /**< event dependent data */
-//	    Sint32 data2;       /**< event dependent data */
-//	} SDL_WindowEvent;
-//
-// # Version
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -2000,7 +1322,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 		e := (*C.SDL_GamepadAxisEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadAxisEvent{
 			Which: JoystickID(e.which),
-			Axis:  uint8(e.axis),
+			Axis:  GamepadAxis(e.axis),
 			Value: int16(e.value),
 		}
 	case t == EVENT_GAMEPAD_BUTTON_DOWN || t == EVENT_GAMEPAD_BUTTON_UP:
@@ -2026,7 +1348,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 		e := (*C.SDL_GamepadSensorEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadSensorEvent{
 			Which:           JoystickID(e.which),
-			Sensor:          int32(e.sensor),
+			Sensor:          SensorType(e.sensor),
 			Data:            *(*[3]float32)(unsafe.Pointer(&e.data)),
 			SensorTimestamp: uint64(e.sensor_timestamp),
 		}

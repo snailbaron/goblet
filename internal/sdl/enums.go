@@ -1,5 +1,7 @@
 package sdl
 
+import "math"
+
 type InitFlags uint32
 
 const (
@@ -1022,4 +1024,137 @@ const (
 	HAT_RIGHTDOWN JoystickHat = (HAT_RIGHT | HAT_DOWN)
 	HAT_LEFTUP    JoystickHat = (HAT_LEFT | HAT_UP)
 	HAT_LEFTDOWN  JoystickHat = (HAT_LEFT | HAT_DOWN)
+)
+
+// GamepadAxis is the list of axes available on a gamepad.
+//
+// Defined in <SDL3/SDL_gamepad.h>
+//
+// Thumbstick axis values range from SDL_JOYSTICK_AXIS_MIN to
+// SDL_JOYSTICK_AXIS_MAX, and are centered within ~8000 of zero, though
+// advanced UI will allow users to set or autodetect the dead zone, which
+// varies between gamepads.
+//
+// Trigger axis values range from 0 (released) to SDL_JOYSTICK_AXIS_MAX (fully
+// pressed) when reported by SDL_GetGamepadAxis(). Note that this is not the
+// same range that will be reported by the lower-level SDL_GetJoystickAxis().
+//
+// [<SDL3/SDL_gamepad.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gamepad.h
+type GamepadAxis uint8
+
+const (
+	GAMEPAD_AXIS_INVALID GamepadAxis = math.MaxUint8
+	GAMEPAD_AXIS_LEFTX   GamepadAxis = iota
+	GAMEPAD_AXIS_LEFTY
+	GAMEPAD_AXIS_RIGHTX
+	GAMEPAD_AXIS_RIGHTY
+	GAMEPAD_AXIS_LEFT_TRIGGER
+	GAMEPAD_AXIS_RIGHT_TRIGGER
+	GAMEPAD_AXIS_COUNT
+)
+
+// GamepadButton is the list of buttons available on a gamepad.
+//
+// Defined in <SDL3/SDL_gamepad.h>
+//
+// For controllers that use a diamond pattern for the face buttons, the
+// south/east/west/north buttons below correspond to the locations in the
+// diamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo
+// Switch controllers, this would be B/A/Y/X, for GameCube controllers this
+// would be A/X/B/Y, for PlayStation controllers this would be
+// Cross/Circle/Square/Triangle.
+//
+// For controllers that don't use a diamond pattern for the face buttons, the
+// south/east/west/north buttons indicate the buttons labeled A, B, C, D, or 1,
+// 2, 3, 4, or for controllers that aren't labeled, they are the primary,
+// secondary, etc. buttons.
+//
+// The activate action is often the south button and the cancel action is often
+// the east button, but in some regions this is reversed, so your game should
+// allow remapping actions based on user preferences.
+//
+// You can query the labels for the face buttons using
+// SDL_GetGamepadButtonLabel()
+//
+// This enum is available since SDL 3.2.0.
+//
+// [<SDL3/SDL_gamepad.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gamepad.h
+type GamepadButton uint8
+
+const (
+	GAMEPAD_BUTTON_INVALID GamepadButton = math.MaxUint8
+	// Bottom face button (e.g. Xbox A button)
+	GAMEPAD_BUTTON_SOUTH GamepadButton = iota
+	// Right face button (e.g. Xbox B button)
+	GAMEPAD_BUTTON_EAST
+	// Left face button (e.g. Xbox X button)
+	GAMEPAD_BUTTON_WEST
+	// Top face button (e.g. Xbox Y button)
+	GAMEPAD_BUTTON_NORTH
+	GAMEPAD_BUTTON_BACK
+	GAMEPAD_BUTTON_GUIDE
+	GAMEPAD_BUTTON_START
+	GAMEPAD_BUTTON_LEFT_STICK
+	GAMEPAD_BUTTON_RIGHT_STICK
+	GAMEPAD_BUTTON_LEFT_SHOULDER
+	GAMEPAD_BUTTON_RIGHT_SHOULDER
+	GAMEPAD_BUTTON_DPAD_UP
+	GAMEPAD_BUTTON_DPAD_DOWN
+	GAMEPAD_BUTTON_DPAD_LEFT
+	GAMEPAD_BUTTON_DPAD_RIGHT
+	// Additional button (e.g. Xbox Series X share button, PS5 microphone
+	// button, Nintendo Switch Pro capture button, Steam Controller QAM button,
+	// Amazon Luna microphone button, Google Stadia capture button)
+	GAMEPAD_BUTTON_MISC1
+	// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle
+	// P1, DualSense Edge RB button, Right Joy-Con SR button, Steam Controller
+	// R4 button)
+	GAMEPAD_BUTTON_RIGHT_PADDLE1
+	// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle
+	// P3, DualSense Edge LB button, Left Joy-Con SL button, Steam Controller
+	// L4 button)
+	GAMEPAD_BUTTON_LEFT_PADDLE1
+	// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle
+	// P2, DualSense Edge right Fn button, Right Joy-Con SL button, Steam
+	// Controller R5 button)
+	GAMEPAD_BUTTON_RIGHT_PADDLE2
+	// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle
+	// P4, DualSense Edge left Fn button, Left Joy-Con SR button, Steam
+	// Controller L5 button)
+	GAMEPAD_BUTTON_LEFT_PADDLE2
+	// PS4/PS5 touchpad button
+	GAMEPAD_BUTTON_TOUCHPAD
+	// Additional button
+	GAMEPAD_BUTTON_MISC2
+	// Additional button (e.g. Nintendo GameCube left trigger click)
+	GAMEPAD_BUTTON_MISC3
+	// Additional button (e.g. Nintendo GameCube right trigger click)
+	GAMEPAD_BUTTON_MISC4
+	// Additional button
+	GAMEPAD_BUTTON_MISC5
+	// Additional button
+	GAMEPAD_BUTTON_MISC6
+	GAMEPAD_BUTTON_COUNT
+)
+
+type SensorType int32
+
+const (
+	// Returned for an invalid sensor
+	SENSOR_INVALID = -1 + iota
+	// Unknown sensor type
+	SENSOR_UNKNOWN
+	// Accelerometer
+	SENSOR_ACCEL
+	// Gyroscope
+	SENSOR_GYRO
+	// Accelerometer for left Joy-Con controller and Wii nunchuk
+	SENSOR_ACCEL_L
+	// Gyroscope for left Joy-Con controller
+	SENSOR_GYRO_L
+	// Accelerometer for right Joy-Con controller
+	SENSOR_ACCEL_R
+	// Gyroscope for right Joy-Con controller
+	SENSOR_GYRO_R
+	SENSOR_COUNT
 )

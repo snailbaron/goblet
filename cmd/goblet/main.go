@@ -49,9 +49,14 @@ func main() {
 		}
 
 		if framesPassed := timer.Cutoff(); framesPassed > 0 {
-			for range framesPassed {
-				renderer.SetDrawColor(30, 30, 30, 255)
-				renderer.Clear()
+			if err := renderer.SetDrawColor(30, 30, 30, 255); err != nil {
+				log.Fatal(err)
+			}
+			if err := renderer.Clear(); err != nil {
+				log.Fatal(err)
+			}
+			if err := renderer.Present(); err != nil {
+				log.Fatal(err)
 			}
 		}
 
