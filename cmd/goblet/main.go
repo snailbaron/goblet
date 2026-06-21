@@ -21,18 +21,18 @@ func main() {
 	}
 	defer sdl.Quit()
 
-	window, err := sdl.CreateWindow(
-		"Goblet", config.WindowWidth, config.WindowHeight, 0)
-	if err != nil {
+	screen := NewScreen(config)
+	if err := screen.Init(); err != nil {
 		log.Panic(err)
 	}
-	defer window.Destroy()
+	defer screen.Destroy()
 
-	renderer, err := window.CreateRenderer()
-	if err != nil {
-		log.Panic(err)
-	}
-	defer renderer.Destroy()
+	screen.AddWidget(&Button{
+		Position:        sdl.FRect{X: 200, Y: 100, W: 200, H: 100},
+		BorderColor:     NewRGBColor(10, 10, 10),
+		BorderWidth:     5,
+		BackgroundColor: NewRGBColor(200, 200, 150),
+	})
 
 	timer := NewFrameTimer(config.FPS)
 	for {
@@ -60,18 +60,13 @@ func main() {
 		}
 
 		if framesPassed := timer.Cutoff(); framesPassed > 0 {
-			r, g, b, a := config.BackgroundColor[0],
-				config.BackgroundColor[1], config.BackgroundColor[2],
-				config.BackgroundColor[3]
-			if err := renderer.SetDrawColor(r, g, b, a); err != nil {
-				log.Panic(err)
+			for range framesPassed {
+				if err := screen.Update(timer.Delta()); err != nil {
+					log.Panic(err)
+				}
 			}
 
-			if err := renderer.Clear(); err != nil {
-				log.Panic(err)
-			}
-
-			if err := renderer.Present(); err != nil {
+			if err := screen.Render(); err != nil {
 				log.Panic(err)
 			}
 		}

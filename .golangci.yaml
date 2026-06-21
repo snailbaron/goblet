@@ -8,12 +8,14 @@ linters:
     - cyclop
     - depguard
     - dupword
+    - exhaustruct
     - funlen
     - gochecknoglobals
     - gocognit
     - gocyclo
     - gomodguard # deprecated in favor of gomodguard_v2
     - maintidx
+    - mnd
     - nlreturn
     - noinlineerr
     - varnamelen

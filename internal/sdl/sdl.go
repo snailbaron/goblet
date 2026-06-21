@@ -356,6 +356,64 @@ func (rr *Renderer) SetDrawColor(r, g, b, a uint8) error {
 	return nil
 }
 
+// FRect is a rectangle stored using floating point values.
+//
+// Defined in [<SDL3/SDL_rect.h>].
+//
+// The origin of the coordinate space is in the top-left, with increasing
+// values moving down and right. The properties x and y represent the
+// coordinates of the top-left corner of the rectangle.
+//
+// This struct is available since SDL 3.2.0.
+//
+// See Also:
+//   - SDL_RectEmptyFloat
+//   - SDL_RectsEqualFloat
+//   - SDL_RectsEqualEpsilon
+//   - SDL_HasRectIntersectionFloat
+//   - SDL_GetRectIntersectionFloat
+//   - SDL_GetRectAndLineIntersectionFloat
+//   - SDL_GetRectUnionFloat
+//   - SDL_GetRectEnclosingPointsFloat
+//   - SDL_PointInRectFloat
+//
+// [<SDL3/SDL_rect.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_rect.h
+type FRect struct {
+	X float32
+	Y float32
+	W float32
+	H float32
+}
+
+// FillRect fills a rectangle on the current rendering target with the drawing
+// color at subpixel precision.
+//
+// Defined in [<SDL3/SDL_render.h>].
+//
+// Returns true on success or false on failure; call SDL_GetError() for more
+// information.
+//
+// This function should only be called on the main thread.
+//
+// This function is available since SDL 3.2.0.
+//
+// See Also
+//   - SDL_RenderFillRects
+//
+// [<SDL3/SDL_render.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_render.h
+func (rr *Renderer) FillRect(rect *FRect) error {
+	cRect := C.SDL_FRect{
+		x: C.float(rect.X),
+		y: C.float(rect.Y),
+		w: C.float(rect.W),
+		h: C.float(rect.H),
+	}
+	if !C.SDL_RenderFillRect(rr.ptr, &cRect) {
+		return getError()
+	}
+	return nil
+}
+
 // LoadTexture loads an image from a filesystem path into a texture.
 //
 // Defined in [<SDL3_image/SDL_image.h>].

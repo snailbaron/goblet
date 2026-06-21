@@ -16,6 +16,10 @@ func NewFrameTimer(fps int) *FrameTimer {
 	}
 }
 
+func (t *FrameTimer) Delta() float64 {
+	return t.frameDuration.Seconds()
+}
+
 func (t *FrameTimer) Reset() {
 	t.startTime = time.Now()
 	t.lastFrame = 0
