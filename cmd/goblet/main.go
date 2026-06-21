@@ -65,9 +65,11 @@ func main() {
 			if err := renderer.SetDrawColor(r, g, b, a); err != nil {
 				log.Panic(err)
 			}
+
 			if err := renderer.Clear(); err != nil {
 				log.Panic(err)
 			}
+
 			if err := renderer.Present(); err != nil {
 				log.Panic(err)
 			}

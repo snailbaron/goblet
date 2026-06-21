@@ -8,9 +8,9 @@ import (
 )
 
 func toStrings(cStrings **C.char, num int32) []string {
-	var results []string
-	for _, cc := range unsafe.Slice(cStrings, num) {
-		results = append(results, C.GoString(cc))
+	results := make([]string, num)
+	for i, cc := range unsafe.Slice(cStrings, num) {
+		results[i] = C.GoString(cc)
 	}
 	return results
 }

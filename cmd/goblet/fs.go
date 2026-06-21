@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 )
@@ -12,7 +11,7 @@ func writeFileAtomically(data []byte, path string) error {
 		return err
 	}
 
-	pattern := fmt.Sprintf("%s-*.tmp", filepath.Base(path))
+	pattern := filepath.Base(path) + "-*.tmp"
 	tempFile, err := os.CreateTemp(filepath.Dir(path), pattern)
 	if err != nil {
 		return err
