@@ -1,6 +1,7 @@
 package sdl
 
 // #include <SDL3/SDL.h>
+// #include <SDL3_image/SDL_image.h>
 //
 // #include <stdlib.h>
 import "C"
@@ -46,8 +47,10 @@ func CreateWindow(title string, w, h int, flags WindowFlags) (*Window, error) {
 }
 
 func (w *Window) Destroy() {
-	C.SDL_DestroyWindow(w.ptr)
-	w.ptr = nil
+	if w.ptr != nil {
+		C.SDL_DestroyWindow(w.ptr)
+		w.ptr = nil
+	}
 }
 
 func (w *Window) CreateRenderer() (*Renderer, error) {
@@ -59,8 +62,10 @@ func (w *Window) CreateRenderer() (*Renderer, error) {
 }
 
 func (rr *Renderer) Destroy() {
-	C.SDL_DestroyRenderer(rr.ptr)
-	rr.ptr = nil
+	if rr.ptr != nil {
+		C.SDL_DestroyRenderer(rr.ptr)
+		rr.ptr = nil
+	}
 }
 
 func (rr *Renderer) Clear() error {
@@ -119,6 +124,17 @@ func (rr *Renderer) SetDrawColor(r, g, b, a uint8) error {
 	return nil
 }
 
+func (rr *Renderer) LoadTexture(file string) (*Texture, error) {
+	cFile := C.CString(file)
+	defer C.free(unsafe.Pointer(cFile))
+
+	t := C.IMG_LoadTexture(rr.ptr, cFile)
+	if t == nil {
+		return nil, getError()
+	}
+	return &Texture{ptr: t}, nil
+}
+
 func PollEvent() (*Event, bool) {
 	var e C.SDL_Event
 	if !C.SDL_PollEvent(&e) {
@@ -141,4 +157,15 @@ func PollEvent() (*Event, bool) {
 // [<SDL3/SDL_timer.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_timer.h
 func GetTicksNS() uint64 {
 	return uint64(C.SDL_GetTicksNS())
+}
+
+type Texture struct {
+	ptr *C.struct_SDL_Texture
+}
+
+func (t *Texture) Destroy() {
+	if t.ptr != nil {
+		C.SDL_DestroyTexture(t.ptr)
+		t.ptr = nil
+	}
 }
