@@ -54,37 +54,37 @@ const (
 	EVENT_QUIT EventType = 0x100 + iota // User-requested quit
 
 	// These application events have special meaning on iOS and Android, see
-	// README-ios.md and README-android.md for details
+	// README-ios.md and README-android.md for details.
 
 	// The application is being terminated by the OS. This event must be handled in
 	// a callback set with SDL_AddEventWatch().  Called on iOS in
-	// applicationWillTerminate() Called on Android in onDestroy()
+	// applicationWillTerminate() Called on Android in onDestroy().
 	EVENT_TERMINATING
 
 	// The application is low on memory, free memory if possible. This event must
 	// be handled in a callback set with SDL_AddEventWatch().  Called on iOS in
-	// applicationDidReceiveMemoryWarning() Called on Android in onTrimMemory()
+	// applicationDidReceiveMemoryWarning() Called on Android in onTrimMemory().
 	EVENT_LOW_MEMORY
 
 	// The application is about to enter the background. This event must be handled
 	// in a callback set with SDL_AddEventWatch().  Called on iOS in
-	// applicationWillResignActive() Called on Android in onPause()
+	// applicationWillResignActive() Called on Android in onPause().
 	EVENT_WILL_ENTER_BACKGROUND
 
 	// The application did enter the background and may not get CPU for some time.
 	// This event must be handled in a callback set with SDL_AddEventWatch().
 	// Called on iOS in applicationDidEnterBackground() Called on Android in
-	// onPause()
+	// onPause().
 	EVENT_DID_ENTER_BACKGROUND
 
 	// The application is about to enter the foreground. This event must be handled
 	// in a callback set with SDL_AddEventWatch().  Called on iOS in
-	// applicationWillEnterForeground() Called on Android in onResume()
+	// applicationWillEnterForeground() Called on Android in onResume().
 	EVENT_WILL_ENTER_FOREGROUND
 
 	// The application is now interactive. This event must be handled in a callback
 	// set with SDL_AddEventWatch().  Called on iOS in applicationDidBecomeActive()
-	// Called on Android in onResume()
+	// Called on Android in onResume().
 	EVENT_DID_ENTER_FOREGROUND
 
 	EVENT_LOCALE_CHANGED // The user's locale preferences have changed.
@@ -95,7 +95,7 @@ const (
 // Display events
 
 const (
-	// 0x150 was SDL_DISPLAYEVENT, reserve the number for sdl2-compat
+	// 0x150 was SDL_DISPLAYEVENT, reserve the number for sdl2-compat.
 
 	EVENT_DISPLAY_ORIENTATION           EventType = 0x151 + iota // Display orientation has changed to data1
 	EVENT_DISPLAY_ADDED                                          // Display has been added to the system
@@ -113,7 +113,7 @@ const (
 
 const (
 	// 0x200 was SDL_WINDOWEVENT, reserve the number for sdl2-compat
-	// 0x201 was SDL_SYSWMEVENT, reserve the number for sdl2-compat
+	// 0x201 was SDL_SYSWMEVENT, reserve the number for sdl2-compat.
 
 	EVENT_WINDOW_SHOWN  EventType = 0x202 + iota // Window has been shown
 	EVENT_WINDOW_HIDDEN                          // Window has been hidden
@@ -143,7 +143,7 @@ const (
 	// message is being handled in an event watcher, the window handle is still
 	// valid and can still be used to retrieve any properties associated with the
 	// window. Otherwise, the handle has already been destroyed and all resources
-	// associated with it are invalid
+	// associated with it are invalid.
 	EVENT_WINDOW_DESTROYED
 	EVENT_WINDOW_HDR_STATE_CHANGED // Window HDR properties have changed
 	EVENT_WINDOW_SETTINGS_CHANGED  // Window settings have changed (on visionOS)
@@ -311,10 +311,10 @@ const (
 )
 
 // Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use, and should be
-// allocated with SDL_RegisterEvents()
+// allocated with SDL_RegisterEvents().
 const EVENT_USER EventType = 0x8000
 
-// This last event is only for bounding internal arrays
+// This last event is only for bounding internal arrays.
 const EVENT_LAST EventType = 0xFFFF
 
 type Scancode uint32
@@ -422,7 +422,7 @@ const (
 	SCANCODE_PRINTSCREEN Scancode = 70
 	SCANCODE_SCROLLLOCK  Scancode = 71
 	SCANCODE_PAUSE       Scancode = 72
-	// insert on PC, help on some Mac keyboards (but does send code 73, not 117)
+	// insert on PC, help on some Mac keyboards (but does send code 73, not 117).
 	SCANCODE_INSERT   Scancode = 73
 	SCANCODE_HOME     Scancode = 74
 	SCANCODE_PAGEUP   Scancode = 75
@@ -434,7 +434,7 @@ const (
 	SCANCODE_DOWN     Scancode = 81
 	SCANCODE_UP       Scancode = 82
 
-	// num lock on PC, clear on Mac keyboards
+	// num lock on PC, clear on Mac keyboards.
 	SCANCODE_NUMLOCKCLEAR Scancode = 83
 	SCANCODE_KP_DIVIDE    Scancode = 84
 	SCANCODE_KP_MULTIPLY  Scancode = 85
@@ -461,7 +461,7 @@ const (
 	SCANCODE_NONUSBACKSLASH Scancode = 100
 	SCANCODE_APPLICATION    Scancode = 101 // windows contextual menu, compose
 	// The USB document says this is a status flag, not a physical key - but some
-	// Mac keyboards do have a power key. */
+	// Mac keyboards do have a power key. */.
 	SCANCODE_POWER      Scancode = 102
 	SCANCODE_KP_EQUALS  Scancode = 103
 	SCANCODE_F13        Scancode = 104
@@ -587,7 +587,7 @@ const (
 	SCANCODE_RGUI   Scancode = 231 // windows, command (apple), meta
 
 	// I'm not sure if this is really not covered by any of the above, but since
-	// there's a special SDL_KMOD_MODE for it I'm adding it here
+	// there's a special SDL_KMOD_MODE for it I'm adding it here.
 	SCANCODE_MODE Scancode = 257
 
 	// These values are mapped from usage page 0x0C (USB consumer page).
@@ -1083,13 +1083,13 @@ type GamepadButton uint8
 
 const (
 	GAMEPAD_BUTTON_INVALID GamepadButton = math.MaxUint8
-	// Bottom face button (e.g. Xbox A button)
+	// Bottom face button (e.g. Xbox A button).
 	GAMEPAD_BUTTON_SOUTH GamepadButton = iota
-	// Right face button (e.g. Xbox B button)
+	// Right face button (e.g. Xbox B button).
 	GAMEPAD_BUTTON_EAST
-	// Left face button (e.g. Xbox X button)
+	// Left face button (e.g. Xbox X button).
 	GAMEPAD_BUTTON_WEST
-	// Top face button (e.g. Xbox Y button)
+	// Top face button (e.g. Xbox Y button).
 	GAMEPAD_BUTTON_NORTH
 	GAMEPAD_BUTTON_BACK
 	GAMEPAD_BUTTON_GUIDE
@@ -1104,35 +1104,35 @@ const (
 	GAMEPAD_BUTTON_DPAD_RIGHT
 	// Additional button (e.g. Xbox Series X share button, PS5 microphone
 	// button, Nintendo Switch Pro capture button, Steam Controller QAM button,
-	// Amazon Luna microphone button, Google Stadia capture button)
+	// Amazon Luna microphone button, Google Stadia capture button).
 	GAMEPAD_BUTTON_MISC1
 	// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle
 	// P1, DualSense Edge RB button, Right Joy-Con SR button, Steam Controller
-	// R4 button)
+	// R4 button).
 	GAMEPAD_BUTTON_RIGHT_PADDLE1
 	// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle
 	// P3, DualSense Edge LB button, Left Joy-Con SL button, Steam Controller
-	// L4 button)
+	// L4 button).
 	GAMEPAD_BUTTON_LEFT_PADDLE1
 	// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle
 	// P2, DualSense Edge right Fn button, Right Joy-Con SL button, Steam
-	// Controller R5 button)
+	// Controller R5 button).
 	GAMEPAD_BUTTON_RIGHT_PADDLE2
 	// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle
 	// P4, DualSense Edge left Fn button, Left Joy-Con SR button, Steam
-	// Controller L5 button)
+	// Controller L5 button).
 	GAMEPAD_BUTTON_LEFT_PADDLE2
-	// PS4/PS5 touchpad button
+	// PS4/PS5 touchpad button.
 	GAMEPAD_BUTTON_TOUCHPAD
-	// Additional button
+	// Additional button.
 	GAMEPAD_BUTTON_MISC2
-	// Additional button (e.g. Nintendo GameCube left trigger click)
+	// Additional button (e.g. Nintendo GameCube left trigger click).
 	GAMEPAD_BUTTON_MISC3
-	// Additional button (e.g. Nintendo GameCube right trigger click)
+	// Additional button (e.g. Nintendo GameCube right trigger click).
 	GAMEPAD_BUTTON_MISC4
-	// Additional button
+	// Additional button.
 	GAMEPAD_BUTTON_MISC5
-	// Additional button
+	// Additional button.
 	GAMEPAD_BUTTON_MISC6
 	GAMEPAD_BUTTON_COUNT
 )
@@ -1140,21 +1140,21 @@ const (
 type SensorType int32
 
 const (
-	// Returned for an invalid sensor
+	// Returned for an invalid sensor.
 	SENSOR_INVALID = -1 + iota
-	// Unknown sensor type
+	// Unknown sensor type.
 	SENSOR_UNKNOWN
-	// Accelerometer
+	// Accelerometer.
 	SENSOR_ACCEL
-	// Gyroscope
+	// Gyroscope.
 	SENSOR_GYRO
-	// Accelerometer for left Joy-Con controller and Wii nunchuk
+	// Accelerometer for left Joy-Con controller and Wii nunchuk.
 	SENSOR_ACCEL_L
-	// Gyroscope for left Joy-Con controller
+	// Gyroscope for left Joy-Con controller.
 	SENSOR_GYRO_L
-	// Accelerometer for right Joy-Con controller
+	// Accelerometer for right Joy-Con controller.
 	SENSOR_ACCEL_R
-	// Gyroscope for right Joy-Con controller
+	// Gyroscope for right Joy-Con controller.
 	SENSOR_GYRO_R
 	SENSOR_COUNT
 )
