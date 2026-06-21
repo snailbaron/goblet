@@ -15,6 +15,8 @@ func toStrings(cStrings **C.char, num int32) []string {
 	return results
 }
 
+// Event is the common event type, returned by functions such as [PollEvent].
+// It plays a similar role to the SDL_Event union.
 type Event struct {
 	CommonEvent
 
@@ -26,163 +28,200 @@ func cast[T any](e *Event) *T {
 	return t
 }
 
+// Display returns display event data.
 func (e *Event) Display() *DisplayEvent {
 	return cast[DisplayEvent](e)
 }
 
+// Window returns window event data.
 func (e *Event) Window() *WindowEvent {
 	return cast[WindowEvent](e)
 }
 
+// KDevice returns keyboard device change event data.
 func (e *Event) KDevice() *KeyboardDeviceEvent {
 	return cast[KeyboardDeviceEvent](e)
 }
 
+// Key returns keyboard event data.
 func (e *Event) Key() *KeyboardEvent {
 	return cast[KeyboardEvent](e)
 }
 
+// Edit returns text editing event data.
 func (e *Event) Edit() *TextEditingEvent {
 	return cast[TextEditingEvent](e)
 }
 
+// EditCandidates returns text editing candidates event data.
 func (e *Event) EditCandidates() *TextEditingCandidatesEvent {
 	return cast[TextEditingCandidatesEvent](e)
 }
 
+// Text returns text input event data.
 func (e *Event) Text() *TextInputEvent {
 	return cast[TextInputEvent](e)
 }
 
+// MDevice returns mouse device change event data.
 func (e *Event) MDevice() *MouseDeviceEvent {
 	return cast[MouseDeviceEvent](e)
 }
 
+// Motion returns mouse motion event data.
 func (e *Event) Motion() *MouseMotionEvent {
 	return cast[MouseMotionEvent](e)
 }
 
+// Button returns mouse button event data.
 func (e *Event) Button() *MouseButtonEvent {
 	return cast[MouseButtonEvent](e)
 }
 
+// Wheel returns mouse wheel event data.
 func (e *Event) Wheel() *MouseWheelEvent {
 	return cast[MouseWheelEvent](e)
 }
 
+// JDevice returns joystick device change event data.
 func (e *Event) JDevice() *JoyDeviceEvent {
 	return cast[JoyDeviceEvent](e)
 }
 
+// JAxis returns joystick axis event data.
 func (e *Event) JAxis() *JoyAxisEvent {
 	return cast[JoyAxisEvent](e)
 }
 
+// JBall returns joystick ball event data.
 func (e *Event) JBall() *JoyBallEvent {
 	return cast[JoyBallEvent](e)
 }
 
+// JHat returns joystick hat event data.
 func (e *Event) JHat() *JoyHatEvent {
 	return cast[JoyHatEvent](e)
 }
 
+// JButton returns joystick button event data.
 func (e *Event) JButton() *JoyButtonEvent {
 	return cast[JoyButtonEvent](e)
 }
 
+// JBattery returns joystick battery event data.
 func (e *Event) JBattery() *JoyBatteryEvent {
 	return cast[JoyBatteryEvent](e)
 }
 
+// GDevice returns gamepad device event data.
 func (e *Event) GDevice() *GamepadDeviceEvent {
 	return cast[GamepadDeviceEvent](e)
 }
 
+// GAxis returns gamepad axis event data.
 func (e *Event) GAxis() *GamepadAxisEvent {
 	return cast[GamepadAxisEvent](e)
 }
 
+// GButton returns gamepad button event data.
 func (e *Event) GButton() *GamepadButtonEvent {
 	return cast[GamepadButtonEvent](e)
 }
 
+// GTouchpad returns gamepad touchpad event data.
 func (e *Event) GTouchpad() *GamepadTouchpadEvent {
 	return cast[GamepadTouchpadEvent](e)
 }
 
+// GSensor returns gamepad sensor event data.
 func (e *Event) GSensor() *GamepadSensorEvent {
 	return cast[GamepadSensorEvent](e)
 }
 
+// ADevice returns audio device event data.
 func (e *Event) ADevice() *AudioDeviceEvent {
 	return cast[AudioDeviceEvent](e)
 }
 
+// CDevice returns camera device event data.
 func (e *Event) CDevice() *CameraDeviceEvent {
 	return cast[CameraDeviceEvent](e)
 }
 
+// Sensor returns sensor event data.
 func (e *Event) Sensor() *SensorEvent {
 	return cast[SensorEvent](e)
 }
 
+// Quit returns quit request event data.
 func (e *Event) Quit() *QuitEvent {
 	return cast[QuitEvent](e)
 }
 
+// User returns custom event data.
 func (e *Event) User() *UserEvent {
 	return cast[UserEvent](e)
 }
 
+// TFinger returns touch finger event data.
 func (e *Event) TFinger() *TouchFingerEvent {
 	return cast[TouchFingerEvent](e)
 }
 
+// Pinch returns pinch event data.
 func (e *Event) Pinch() *PinchFingerEvent {
 	return cast[PinchFingerEvent](e)
 }
 
+// PProximity returns pen proximity event data.
 func (e *Event) PProximity() *PenProximityEvent {
 	return cast[PenProximityEvent](e)
 }
 
+// PTouch returns pen tip touching event data.
 func (e *Event) PTouch() *PenTouchEvent {
 	return cast[PenTouchEvent](e)
 }
 
+// PMotion returns pen motion event data.
 func (e *Event) PMotion() *PenMotionEvent {
 	return cast[PenMotionEvent](e)
 }
 
+// PButton returns pen button event data.
 func (e *Event) PButton() *PenButtonEvent {
 	return cast[PenButtonEvent](e)
 }
 
+// PAxis returns pen axis event data.
 func (e *Event) PAxis() *PenAxisEvent {
 	return cast[PenAxisEvent](e)
 }
 
+// Render returns render event data.
 func (e *Event) Render() *RenderEvent {
 	return cast[RenderEvent](e)
 }
 
+// Drop returns drag and drop event data.
 func (e *Event) Drop() *DropEvent {
 	return cast[DropEvent](e)
 }
 
+// Clipboard returns clipboard event data.
 func (e *Event) Clipboard() *ClipboardEvent {
 	return cast[ClipboardEvent](e)
 }
 
 // AudioDeviceEvent is an audio device event structure (event.adevice.*).
 //
-// [EVENT_AUDIO_DEVICE_ADDED], or [EVENT_AUDIO_DEVICE_REMOVED], or
-// [EVENT_AUDIO_DEVICE_FORMAT_CHANGED]
+// [EventAudioDeviceAdded], or [EventAudioDeviceRemoved], or
+// [EventAudioDeviceFormatChanged]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
-// Note that SDL will send a [EVENT_AUDIO_DEVICE_ADDED] event for every device
-// it discovers during initialization. After that, this event will only arrive
+// Note that SDL will send a [EventAudioDeviceAdded] event for every device it
+// discovers during initialization. After that, this event will only arrive
 // when a device is hotplugged during the program's run.
 //
 // This struct is available since SDL 3.2.0.
@@ -198,8 +237,8 @@ type AudioDeviceEvent struct {
 
 // CameraDeviceEvent is a camera device event structure (event.cdevice.*).
 //
-// [EVENT_CAMERA_DEVICE_ADDED], [EVENT_CAMERA_DEVICE_REMOVED],
-// [EVENT_CAMERA_DEVICE_APPROVED], [EVENT_CAMERA_DEVICE_DENIED]
+// [EventCameraDeviceAdded], [EventCameraDeviceRemoved],
+// [EventCameraDeviceApproved], [EventCameraDeviceDenied]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -214,7 +253,7 @@ type CameraDeviceEvent struct {
 // ClipboardEvent is an event triggered when the clipboard contents have
 // changed (event.clipboard.*).
 //
-// [EVENT_CLIPBOARD_UPDATE]
+// [EventClipboardUpdate]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -247,7 +286,7 @@ type CommonEvent struct {
 
 // DisplayEvent contains display state change event data (event.display.*).
 //
-// EVENT_DISPLAY_*
+// EventDisplay*
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -268,8 +307,8 @@ type DisplayEvent struct {
 // DropEvent is an event used to drop text or request a file open by the system
 // (event.drop.*).
 //
-// [EVENT_DROP_BEGIN] or [EVENT_DROP_FILE] or [EVENT_DROP_TEXT] or
-// [EVENT_DROP_COMPLETE] or [EVENT_DROP_POSITION]
+// [EventDropBegin] or [EventDropFile] or [EventDropText] or
+// [EventDropComplete] or [EventDropPosition]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -290,7 +329,7 @@ type DropEvent struct {
 	// available
 	Source string
 
-	// The text for EVENT_DROP_TEXT and the file name for EVENT_DROP_FILE, NULL
+	// The text for [EventDropText] and the file name for [EventDropFile], NULL
 	// for other events
 	Data string
 }
@@ -298,7 +337,7 @@ type DropEvent struct {
 // GamepadAxisEvent defines gamepad axis motion event structure
 // (event.gaxis.*).
 //
-// [EVENT_GAMEPAD_AXIS_MOTION]
+// [EventGamepadAxisMotion]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -318,7 +357,7 @@ type GamepadAxisEvent struct {
 
 // GamepadButtonEvent is a gamepad button event structure (event.gbutton.*).
 //
-// [EVENT_GAMEPAD_BUTTON_DOWN] or [EVENT_GAMEPAD_BUTTON_UP]
+// [EventGamepadButtonDown] or [EventGamepadButtonUp]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -338,16 +377,15 @@ type GamepadButtonEvent struct {
 
 // GamepadDeviceEvent is a gamepad device event structure (event.gdevice.*).
 //
-// [EVENT_GAMEPAD_ADDED], [EVENT_GAMEPAD_REMOVED], or
-// [EVENT_GAMEPAD_REMAPPED], [EVENT_GAMEPAD_UPDATE_COMPLETE] or
-// [EVENT_GAMEPAD_STEAM_HANDLE_UPDATED]
+// [EventGamepadAdded], [EventGamepadRemoved], or [EventGamepadRemapped],
+// [EventGamepadUpdateComplete] or [EventGamepadSteamHandleUpdated]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
 // Joysticks that are supported gamepads receive both an [JoyDeviceEvent] and
 // an [GamepadDeviceEvent].
 //
-// SDL will send [EVENT_GAMEPAD_ADDED] events for joysticks that are already
+// SDL will send [EventGamepadAdded] events for joysticks that are already
 // plugged in during [Init]() and are recognized as gamepads. It will also send
 // events for joysticks that get gamepad mappings at runtime.
 //
@@ -365,7 +403,7 @@ type GamepadDeviceEvent struct {
 
 // GamepadSensorEvent is a gamepad sensor event structure (event.gsensor.*).
 //
-// [EVENT_GAMEPAD_SENSOR_UPDATE]
+// [EventGamepadSensorUpdate]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -390,8 +428,8 @@ type GamepadSensorEvent struct {
 // GamepadTouchpadEvent is a gamepad touchpad event structure
 // (event.gtouchpad.*).
 //
-// [EVENT_GAMEPAD_TOUCHPAD_DOWN] or [EVENT_GAMEPAD_TOUCHPAD_MOTION] or
-// [EVENT_GAMEPAD_TOUCHPAD_UP].
+// [EventGamepadTouchpadDown] or [EventGamepadTouchpadMotion] or
+// [EventGamepadTouchpadUp].
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -420,7 +458,7 @@ type GamepadTouchpadEvent struct {
 
 // JoyAxisEvent is a joystick axis motion event structure (event.jaxis.*).
 //
-// [EVENT_JOYSTICK_AXIS_MOTION]
+// [EventJoystickAxisMotion]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -440,7 +478,7 @@ type JoyAxisEvent struct {
 
 // JoyBallEvent is a joystick trackball motion event structure (event.jball.*).
 //
-// [EVENT_JOYSTICK_BALL_MOTION]
+// [EventJoystickBallMotion]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -464,7 +502,7 @@ type JoyBallEvent struct {
 // JoyBatteryEvent is a joystick battery level change event structure
 // (event.jbattery.*).
 //
-// [EVENT_JOYSTICK_BATTERY_UPDATED]
+// [EventJoystickBatteryUpdated]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -484,7 +522,7 @@ type JoyBatteryEvent struct {
 
 // JoyButtonEvent is a joystick button event structure (event.jbutton.*).
 //
-// [EVENT_JOYSTICK_BUTTON_DOWN] or [EVENT_JOYSTICK_BUTTON_UP]
+// [EventJoystickButtonDown] or [EventJoystickButtonUp]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -504,8 +542,8 @@ type JoyButtonEvent struct {
 
 // JoyDeviceEvent is a joystick device event structure (event.jdevice.*).
 //
-// [EVENT_JOYSTICK_ADDED] or [EVENT_JOYSTICK_REMOVED] or
-// [EVENT_JOYSTICK_UPDATE_COMPLETE]
+// [EventJoystickAdded] or [EventJoystickRemoved] or
+// [EventJoystickUpdateComplete]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -527,7 +565,7 @@ type JoyDeviceEvent struct {
 // JoyHatEvent is a joystick hat position change event structure
 // (event.jhat.*).
 //
-// [EVENT_JOYSTICK_HAT_MOTION]
+// [EventJoystickHatMotion]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -549,7 +587,7 @@ type JoyHatEvent struct {
 
 // KeyboardDeviceEvent is a keyboard device event structure (event.kdevice.*).
 //
-// [EVENT_KEYBOARD_ADDED] or [EVENT_KEYBOARD_REMOVED]
+// [EventKeyboardAdded] or [EventKeyboardRemoved]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -563,7 +601,7 @@ type KeyboardDeviceEvent struct {
 
 // KeyboardEvent is a keyboard button event structure (event.key.*).
 //
-// [EVENT_KEY_DOWN] or [EVENT_KEY_UP]
+// [EventKeyDown] or [EventKeyUp]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -609,7 +647,7 @@ type KeyboardEvent struct {
 
 // MouseButtonEvent is a mouse button event structure (event.button.*).
 //
-// [EVENT_MOUSE_BUTTON_DOWN] or [EVENT_MOUSE_BUTTON_UP]
+// [EventMouseButtonDown] or [EventMouseButtonUp]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -642,7 +680,7 @@ type MouseButtonEvent struct {
 
 // MouseDeviceEvent is a mouse device event structure (event.mdevice.*).
 //
-// [EVENT_MOUSE_ADDED] or [EVENT_MOUSE_REMOVED]
+// [EventMouseAdded] or [EventMouseRemoved]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -656,7 +694,7 @@ type MouseDeviceEvent struct {
 
 // MouseMotionEvent is a mouse motion event structure (event.motion.*).
 //
-// [EVENT_MOUSE_MOTION]
+// [EventMouseMotion]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -689,7 +727,7 @@ type MouseMotionEvent struct {
 
 // MouseWheelEvent is a mouse wheel event structure (event.wheel.*).
 //
-// [EVENT_MOUSE_WHEEL]
+// [EventMouseWheel]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -733,7 +771,7 @@ type MouseWheelEvent struct {
 // PenAxisEvent is a pressure-sensitive pen pressure / angle event structure
 // (event.paxis.*).
 //
-// [EVENT_PEN_AXIS]
+// [EventPenAxis]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -769,12 +807,12 @@ type PenAxisEvent struct {
 // PenButtonEvent is a pressure-sensitive pen button event structure
 // (event.pbutton.*).
 //
-// [EVENT_PEN_BUTTON_DOWN] or [EVENT_PEN_BUTTON_UP]
+// [EventPenButtonDown] or [EventPenButtonUp]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
 // This is for buttons on the pen itself that the user might click. The pen
-// itself pressing down to draw triggers a [EVENT_PEN_DOWN] event instead.
+// itself pressing down to draw triggers a [EventPenDown] event instead.
 //
 // This struct is available since SDL 3.2.0.
 //
@@ -805,13 +843,13 @@ type PenButtonEvent struct {
 // PenMotionEvent is a pressure-sensitive pen motion event structure
 // (event.pmotion.*).
 //
-// [EVENT_PEN_MOTION]
+// [EventPenMotion]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
 // Depending on the hardware, you may get motion events when the pen is not
 // touching a tablet, for tracking a pen even when it isn't drawing. You should
-// listen for [EVENT_PEN_DOWN] and [EVENT_PEN_UP] events, or check `pen_state &
+// listen for [EventPenDown] and [EventPenUp] events, or check `pen_state &
 // PEN_INPUT_DOWN` to decide if a pen is "drawing" when dealing with pen
 // motion.
 //
@@ -838,19 +876,19 @@ type PenMotionEvent struct {
 // PenProximityEvent is a pressure-sensitive pen proximity event structure
 // (event.pproximity.*).
 //
-// [EVENT_PEN_PROXIMITY_IN] or [EVENT_PEN_PROXIMITY_OUT]
+// [EventPenProximityIn] or [EventPenProximityOut]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
 // When a pen becomes visible to the system (it is close enough to a tablet,
-// etc), SDL will send an [EVENT_PEN_PROXIMITY_IN] event with the new pen's ID.
+// etc), SDL will send an [EventPenProximityIn] event with the new pen's ID.
 // This ID is valid until the pen leaves proximity again (has been removed from
 // the tablet's area, the tablet has been unplugged, etc). If the same pen
 // reenters proximity again, it will be given a new ID.
 //
 // Note that "proximity" means "close enough for the tablet to know the tool is
 // there." The pen touching and lifting off from the tablet while not leaving
-// the area are handled by [EVENT_PEN_DOWN] and [EVENT_PEN_UP].
+// the area are handled by [EventPenDown] and [EventPenUp].
 //
 // Not all platforms have a window associated with the pen during proximity
 // events. Some wait until motion/button/etc events to offer this info.
@@ -869,7 +907,7 @@ type PenProximityEvent struct {
 // PenTouchEvent is a pressure-sensitive pen touched event structure
 // (event.ptouch.*).
 //
-// [EVENT_PEN_DOWN] or [EVENT_PEN_UP]
+// [EventPenDown] or [EventPenUp]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -904,14 +942,14 @@ type PenTouchEvent struct {
 
 // PinchFingerEvent is a pinch event structure (event.pinch.*).
 //
-// [EVENT_PINCH_BEGIN] or [EVENT_PINCH_UPDATE] or [EVENT_PINCH_END]
+// [EventPinchBegin] or [EventPinchUpdate] or [EventPinchEnd]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
 // [<SDL3/SDL_events.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_events.h
 type PinchFingerEvent struct {
-	// The scale change since the last [EVENT_PINCH_UPDATE]. Scale < 1 is
-	// ``zoom out''. Scale > 1 is ``zoom in''.
+	// The scale change since the last [EventPinchUpdate]. Scale < 1 is ``zoom
+	// out''. Scale > 1 is ``zoom in''.
 	Scale float32
 
 	// The window underneath the finger, if any
@@ -920,7 +958,7 @@ type PinchFingerEvent struct {
 
 // QuitEvent is the “quit requested” event.
 //
-// [EVENT_QUIT]
+// [EventQuit]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -931,8 +969,7 @@ type QuitEvent struct{}
 
 // RenderEvent is a renderer event structure (event.render.*).
 //
-// [EVENT_RENDER_TARGETS_RESET], [EVENT_RENDER_DEVICE_RESET],
-// [EVENT_RENDER_DEVICE_LOST]
+// [EventRenderTargetsReset], [EventRenderDeviceReset], [EventRenderDeviceLost]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -946,7 +983,7 @@ type RenderEvent struct {
 
 // SensorEvent is a sensor event structure (event.sensor.*).
 //
-// [EVENT_SENSOR_UPDATE]
+// [EventSensorUpdate]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -969,7 +1006,7 @@ type SensorEvent struct {
 // TextEditingCandidatesEvent is a keyboard IME candidates event structure
 // (event.edit_candidates.*).
 //
-// [EVENT_TEXT_EDITING_CANDIDATES]
+// [EventTextEditingCandidates]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -992,7 +1029,7 @@ type TextEditingCandidatesEvent struct {
 
 // TextEditingEvent is a keyboard text editing event structure (event.edit.*).
 //
-// [EVENT_TEXT_EDITING]
+// [EventTextEditing]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -1019,7 +1056,7 @@ type TextEditingEvent struct {
 
 // TextInputEvent is a keyboard text input event structure (event.text.*).
 //
-// [EVENT_TEXT_INPUT]
+// [EventTextInput]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -1044,8 +1081,8 @@ type TextInputEvent struct {
 
 // TouchFingerEvent is a touch finger event structure (event.tfinger.*).
 //
-// [EVENT_FINGER_DOWN], [EVENT_FINGER_UP], [EVENT_FINGER_MOTION], or
-// [EVENT_FINGER_CANCELED]
+// [EventFingerDown], [EventFingerUp], [EventFingerMotion], or
+// [EventFingerCanceled]
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -1093,7 +1130,7 @@ type TouchFingerEvent struct {
 
 // UserEvent is a user-defined event type (event.user.*).
 //
-// [EVENT_USER] through [EVENT_LAST], Uint32 because these are not in the
+// [EventUser] through [EventLast], Uint32 because these are not in the
 // [EventType] enumeration
 //
 // Defined in [<SDL3/SDL_events.h>]
@@ -1140,7 +1177,7 @@ type UserEvent struct {
 
 // WindowEvent is a window state change event data (event.window.*).
 //
-// EVENT_WINDOW_*
+// EventWindow*
 //
 // Defined in [<SDL3/SDL_events.h>]
 //
@@ -1171,26 +1208,26 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 	t := result.Type
 
 	switch {
-	case t >= EVENT_DISPLAY_FIRST && t <= EVENT_DISPLAY_LAST:
+	case t >= EventDisplayFirst && t <= EventDisplayLast:
 		e := (*C.SDL_DisplayEvent)(unsafe.Pointer(cEvent))
 		result.internal = &DisplayEvent{
 			DisplayID: DisplayID(e.displayID),
 			Data1:     int32(e.data1),
 			Data2:     int32(e.data2),
 		}
-	case t >= EVENT_WINDOW_FIRST && t <= EVENT_WINDOW_LAST:
+	case t >= EventWindowFirst && t <= EventWindowLast:
 		e := (*C.SDL_WindowEvent)(unsafe.Pointer(cEvent))
 		result.internal = &WindowEvent{
 			WindowID: WindowID(e.windowID),
 			Data1:    int32(e.data1),
 			Data2:    int32(e.data2),
 		}
-	case t == EVENT_KEYBOARD_ADDED || t == EVENT_KEYBOARD_REMOVED:
+	case t == EventKeyboardAdded || t == EventKeyboardRemoved:
 		e := (*C.SDL_KeyboardDeviceEvent)(unsafe.Pointer(cEvent))
 		result.internal = &KeyboardDeviceEvent{
 			Which: KeyboardID(e.which),
 		}
-	case t == EVENT_KEY_DOWN || t == EVENT_KEY_UP:
+	case t == EventKeyDown || t == EventKeyUp:
 		e := (*C.SDL_KeyboardEvent)(unsafe.Pointer(cEvent))
 		result.internal = &KeyboardEvent{
 			WindowID: WindowID(e.windowID),
@@ -1202,7 +1239,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Down:     bool(e.down),
 			Repeat:   bool(e.repeat),
 		}
-	case t == EVENT_TEXT_EDITING:
+	case t == EventTextEditing:
 		e := (*C.SDL_TextEditingEvent)(unsafe.Pointer(cEvent))
 		result.internal = &TextEditingEvent{
 			WindowID: WindowID(e.windowID),
@@ -1210,7 +1247,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Start:    int32(e.start),
 			Length:   int32(e.length),
 		}
-	case t == EVENT_TEXT_EDITING_CANDIDATES:
+	case t == EventTextEditingCandidates:
 		e := (*C.SDL_TextEditingCandidatesEvent)(unsafe.Pointer(cEvent))
 		result.internal = &TextEditingCandidatesEvent{
 			WindowID:          WindowID(e.windowID),
@@ -1218,18 +1255,18 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			SelectedCandidate: int32(e.selected_candidate),
 			Horizontal:        bool(e.horizontal),
 		}
-	case t == EVENT_TEXT_INPUT:
+	case t == EventTextInput:
 		e := (*C.SDL_TextInputEvent)(unsafe.Pointer(cEvent))
 		result.internal = &TextInputEvent{
 			WindowID: WindowID(e.windowID),
 			Text:     C.GoString(e.text),
 		}
-	case t == EVENT_MOUSE_ADDED || t == EVENT_MOUSE_REMOVED:
+	case t == EventMouseAdded || t == EventMouseRemoved:
 		e := (*C.SDL_MouseDeviceEvent)(unsafe.Pointer(cEvent))
 		result.internal = &MouseDeviceEvent{
 			Which: MouseID(e.which),
 		}
-	case t == EVENT_MOUSE_MOTION:
+	case t == EventMouseMotion:
 		e := (*C.SDL_MouseMotionEvent)(unsafe.Pointer(cEvent))
 		result.internal = &MouseMotionEvent{
 			WindowID: WindowID(e.windowID),
@@ -1240,7 +1277,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Xrel:     float32(e.xrel),
 			Yrel:     float32(e.yrel),
 		}
-	case t == EVENT_MOUSE_BUTTON_DOWN || t == EVENT_MOUSE_BUTTON_UP:
+	case t == EventMouseButtonDown || t == EventMouseButtonUp:
 		e := (*C.SDL_MouseButtonEvent)(unsafe.Pointer(cEvent))
 		result.internal = &MouseButtonEvent{
 			WindowID: WindowID(e.windowID),
@@ -1251,7 +1288,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			X:        float32(e.x),
 			Y:        float32(e.y),
 		}
-	case t == EVENT_MOUSE_WHEEL:
+	case t == EventMouseWheel:
 		e := (*C.SDL_MouseWheelEvent)(unsafe.Pointer(cEvent))
 		result.internal = &MouseWheelEvent{
 			WindowID:  WindowID(e.windowID),
@@ -1264,21 +1301,21 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			IntegerX:  int32(e.integer_x),
 			IntegerY:  int32(e.integer_y),
 		}
-	case t == EVENT_JOYSTICK_ADDED || t == EVENT_JOYSTICK_REMOVED ||
-		t == EVENT_JOYSTICK_UPDATE_COMPLETE:
+	case t == EventJoystickAdded || t == EventJoystickRemoved ||
+		t == EventJoystickUpdateComplete:
 
 		e := (*C.SDL_JoyDeviceEvent)(unsafe.Pointer(cEvent))
 		result.internal = &JoyDeviceEvent{
 			Which: JoystickID(e.which),
 		}
-	case t == EVENT_JOYSTICK_AXIS_MOTION:
+	case t == EventJoystickAxisMotion:
 		e := (*C.SDL_JoyAxisEvent)(unsafe.Pointer(cEvent))
 		result.internal = &JoyAxisEvent{
 			Which: JoystickID(e.which),
 			Axis:  uint8(e.axis),
 			Value: int16(e.value),
 		}
-	case t == EVENT_JOYSTICK_BALL_MOTION:
+	case t == EventJoystickBallMotion:
 		e := (*C.SDL_JoyBallEvent)(unsafe.Pointer(cEvent))
 		result.internal = &JoyBallEvent{
 			Which: JoystickID(e.which),
@@ -1286,51 +1323,51 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Xrel:  int16(e.xrel),
 			Yrel:  int16(e.yrel),
 		}
-	case t == EVENT_JOYSTICK_HAT_MOTION:
+	case t == EventJoystickHatMotion:
 		e := (*C.SDL_JoyHatEvent)(unsafe.Pointer(cEvent))
 		result.internal = &JoyHatEvent{
 			Which: JoystickID(e.which),
 			Hat:   uint8(e.hat),
 			Value: JoystickHat(e.value),
 		}
-	case t == EVENT_JOYSTICK_BUTTON_DOWN || t == EVENT_JOYSTICK_BUTTON_UP:
+	case t == EventJoystickButtonDown || t == EventJoystickButtonUp:
 		e := (*C.SDL_JoyButtonEvent)(unsafe.Pointer(cEvent))
 		result.internal = &JoyButtonEvent{
 			Which:  JoystickID(e.which),
 			Button: uint8(e.button),
 			Down:   bool(e.down),
 		}
-	case t == EVENT_JOYSTICK_BATTERY_UPDATED:
+	case t == EventJoystickBatteryUpdated:
 		e := (*C.SDL_JoyBatteryEvent)(unsafe.Pointer(cEvent))
 		result.internal = &JoyBatteryEvent{
 			Which:   JoystickID(e.which),
 			State:   PowerState(e.state),
 			Percent: int(e.percent),
 		}
-	case t == EVENT_GAMEPAD_ADDED || t == EVENT_GAMEPAD_REMOVED ||
-		t == EVENT_GAMEPAD_REMAPPED || t == EVENT_GAMEPAD_UPDATE_COMPLETE ||
-		t == EVENT_GAMEPAD_STEAM_HANDLE_UPDATED:
+	case t == EventGamepadAdded || t == EventGamepadRemoved ||
+		t == EventGamepadRemapped || t == EventGamepadUpdateComplete ||
+		t == EventGamepadSteamHandleUpdated:
 
 		e := (*C.SDL_GamepadDeviceEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadDeviceEvent{
 			Which: JoystickID(e.which),
 		}
-	case t == EVENT_GAMEPAD_AXIS_MOTION:
+	case t == EventGamepadAxisMotion:
 		e := (*C.SDL_GamepadAxisEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadAxisEvent{
 			Which: JoystickID(e.which),
 			Axis:  GamepadAxis(e.axis),
 			Value: int16(e.value),
 		}
-	case t == EVENT_GAMEPAD_BUTTON_DOWN || t == EVENT_GAMEPAD_BUTTON_UP:
+	case t == EventGamepadButtonDown || t == EventGamepadButtonUp:
 		e := (*C.SDL_GamepadButtonEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadButtonEvent{
 			Which:  JoystickID(e.which),
 			Button: uint8(e.button),
 			Down:   bool(e.down),
 		}
-	case t == EVENT_GAMEPAD_TOUCHPAD_DOWN ||
-		t == EVENT_GAMEPAD_TOUCHPAD_MOTION || t == EVENT_GAMEPAD_TOUCHPAD_UP:
+	case t == EventGamepadTouchpadDown ||
+		t == EventGamepadTouchpadMotion || t == EventGamepadTouchpadUp:
 
 		e := (*C.SDL_GamepadTouchpadEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadTouchpadEvent{
@@ -1341,7 +1378,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Y:        float32(e.y),
 			Pressure: float32(e.pressure),
 		}
-	case t == EVENT_GAMEPAD_SENSOR_UPDATE:
+	case t == EventGamepadSensorUpdate:
 		e := (*C.SDL_GamepadSensorEvent)(unsafe.Pointer(cEvent))
 		result.internal = &GamepadSensorEvent{
 			Which:           JoystickID(e.which),
@@ -1349,31 +1386,31 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Data:            *(*[3]float32)(unsafe.Pointer(&e.data)),
 			SensorTimestamp: uint64(e.sensor_timestamp),
 		}
-	case t == EVENT_AUDIO_DEVICE_ADDED || t == EVENT_AUDIO_DEVICE_REMOVED ||
-		t == EVENT_AUDIO_DEVICE_FORMAT_CHANGED:
+	case t == EventAudioDeviceAdded || t == EventAudioDeviceRemoved ||
+		t == EventAudioDeviceFormatChanged:
 
 		e := (*C.SDL_AudioDeviceEvent)(unsafe.Pointer(cEvent))
 		result.internal = &AudioDeviceEvent{
 			Which:     AudioDeviceID(e.which),
 			Recording: bool(e.recording),
 		}
-	case t == EVENT_CAMERA_DEVICE_ADDED || t == EVENT_CAMERA_DEVICE_REMOVED ||
-		t == EVENT_CAMERA_DEVICE_APPROVED || t == EVENT_CAMERA_DEVICE_DENIED:
+	case t == EventCameraDeviceAdded || t == EventCameraDeviceRemoved ||
+		t == EventCameraDeviceApproved || t == EventCameraDeviceDenied:
 
 		e := (*C.SDL_CameraDeviceEvent)(unsafe.Pointer(cEvent))
 		result.internal = &CameraDeviceEvent{
 			Which: CameraID(e.which),
 		}
-	case t == EVENT_SENSOR_UPDATE:
+	case t == EventSensorUpdate:
 		e := (*C.SDL_SensorEvent)(unsafe.Pointer(cEvent))
 		result.internal = &SensorEvent{
 			Which:           SensorID(e.which),
 			Data:            *(*[6]float32)(unsafe.Pointer(&e.data)),
 			SensorTimestamp: uint64(e.sensor_timestamp),
 		}
-	case t == EVENT_QUIT:
+	case t == EventQuit:
 		result.internal = &QuitEvent{}
-	case t >= EVENT_USER && t <= EVENT_LAST:
+	case t >= EventUser && t <= EventLast:
 		e := (*C.SDL_UserEvent)(unsafe.Pointer(cEvent))
 		result.internal = &UserEvent{
 			WindowID: WindowID(e.windowID),
@@ -1381,8 +1418,8 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Data1:    uintptr(e.data1),
 			Data2:    uintptr(e.data2),
 		}
-	case t == EVENT_FINGER_DOWN || t == EVENT_FINGER_UP ||
-		t == EVENT_FINGER_MOTION || t == EVENT_FINGER_CANCELED:
+	case t == EventFingerDown || t == EventFingerUp ||
+		t == EventFingerMotion || t == EventFingerCanceled:
 
 		e := (*C.SDL_TouchFingerEvent)(unsafe.Pointer(cEvent))
 		result.internal = &TouchFingerEvent{
@@ -1395,21 +1432,21 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Pressure: float32(e.pressure),
 			WindowID: WindowID(e.windowID),
 		}
-	case t == EVENT_PINCH_BEGIN || t == EVENT_PINCH_UPDATE ||
-		t == EVENT_PINCH_END:
+	case t == EventPinchBegin || t == EventPinchUpdate ||
+		t == EventPinchEnd:
 
 		e := (*C.SDL_PinchFingerEvent)(unsafe.Pointer(cEvent))
 		result.internal = &PinchFingerEvent{
 			Scale:    float32(e.scale),
 			WindowID: WindowID(e.windowID),
 		}
-	case t == EVENT_PEN_PROXIMITY_IN || t == EVENT_PEN_PROXIMITY_OUT:
+	case t == EventPenProximityIn || t == EventPenProximityOut:
 		e := (*C.SDL_PenProximityEvent)(unsafe.Pointer(cEvent))
 		result.internal = &PenProximityEvent{
 			WindowID: WindowID(e.windowID),
 			Which:    PenID(e.which),
 		}
-	case t == EVENT_PEN_DOWN || t == EVENT_PEN_UP:
+	case t == EventPenDown || t == EventPenUp:
 		e := (*C.SDL_PenTouchEvent)(unsafe.Pointer(cEvent))
 		result.internal = &PenTouchEvent{
 			WindowID: WindowID(e.windowID),
@@ -1420,7 +1457,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Eraser:   bool(e.eraser),
 			Down:     bool(e.down),
 		}
-	case t == EVENT_PEN_MOTION:
+	case t == EventPenMotion:
 		e := (*C.SDL_PenMotionEvent)(unsafe.Pointer(cEvent))
 		result.internal = &PenMotionEvent{
 			WindowID: WindowID(e.windowID),
@@ -1429,7 +1466,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			X:        float32(e.x),
 			Y:        float32(e.y),
 		}
-	case t == EVENT_PEN_BUTTON_DOWN || t == EVENT_PEN_BUTTON_UP:
+	case t == EventPenButtonDown || t == EventPenButtonUp:
 		e := (*C.SDL_PenButtonEvent)(unsafe.Pointer(cEvent))
 		result.internal = &PenButtonEvent{
 			WindowID: WindowID(e.windowID),
@@ -1440,7 +1477,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Button:   uint8(e.button),
 			Down:     bool(e.down),
 		}
-	case t == EVENT_PEN_AXIS:
+	case t == EventPenAxis:
 		e := (*C.SDL_PenAxisEvent)(unsafe.Pointer(cEvent))
 		result.internal = &PenAxisEvent{
 			WindowID: WindowID(e.windowID),
@@ -1451,15 +1488,15 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Axis:     PenAxis(e.axis),
 			Value:    float32(e.value),
 		}
-	case t == EVENT_RENDER_TARGETS_RESET || t == EVENT_RENDER_DEVICE_RESET ||
-		t == EVENT_RENDER_DEVICE_LOST:
+	case t == EventRenderTargetsReset || t == EventRenderDeviceReset ||
+		t == EventRenderDeviceLost:
 
 		e := (*C.SDL_RenderEvent)(unsafe.Pointer(cEvent))
 		result.internal = &RenderEvent{
 			WindowID: WindowID(e.windowID),
 		}
-	case t == EVENT_DROP_BEGIN || t == EVENT_DROP_FILE ||
-		t == EVENT_DROP_TEXT || t == EVENT_DROP_COMPLETE || t == EVENT_DROP_POSITION:
+	case t == EventDropBegin || t == EventDropFile ||
+		t == EventDropText || t == EventDropComplete || t == EventDropPosition:
 
 		e := (*C.SDL_DropEvent)(unsafe.Pointer(cEvent))
 		result.internal = &DropEvent{
@@ -1469,7 +1506,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Source:   C.GoString(e.source),
 			Data:     C.GoString(e.data),
 		}
-	case t == EVENT_CLIPBOARD_UPDATE:
+	case t == EventClipboardUpdate:
 		e := (*C.SDL_ClipboardEvent)(unsafe.Pointer(cEvent))
 		result.internal = &ClipboardEvent{
 			Owner:     bool(e.owner),

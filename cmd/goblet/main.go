@@ -1,3 +1,4 @@
+// Goblet is the main executable.
 package main
 
 import (
@@ -15,7 +16,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	if err := sdl.Init(sdl.INIT_VIDEO | sdl.INIT_EVENTS); err != nil {
+	if err := sdl.Init(sdl.InitVideo | sdl.InitEvents); err != nil {
 		log.Panic(err)
 	}
 	defer sdl.Quit()
@@ -43,11 +44,11 @@ func main() {
 			}
 
 			switch e.Type {
-			case sdl.EVENT_QUIT:
+			case sdl.EventQuit:
 				done = true
-			case sdl.EVENT_KEY_DOWN:
+			case sdl.EventKeyDown:
 				k := e.Key()
-				if k.Key == sdl.SDLK_ESCAPE {
+				if k.Key == sdl.KEscape {
 					done = true
 				}
 			default:
