@@ -2,4 +2,35 @@ version: "2"
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
-  fix: true
+linters:
+  default: all
+  disable:
+    - cyclop
+    - depguard
+    - dupword
+    - funlen
+    - gochecknoglobals
+    - gocognit
+    - gocyclo
+    - gomodguard # deprecated in favor of gomodguard_v2
+    - maintidx
+    - nlreturn
+    - noinlineerr
+    - varnamelen
+    - wrapcheck
+    - wsl # deprecated in favor of wsl_v5
+    - wsl_v5
+  settings:
+    exhaustive:
+      check: [switch, map]
+      default-signifies-exhaustive: true
+    mnd:
+      ignored-functions:
+        - os.MkdirAll
+    tagliatelle:
+      case:
+        rules:
+          json: lower
+    whitespace:
+      multi-if: true
+      multi-func: true
