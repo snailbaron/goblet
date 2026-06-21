@@ -7,6 +7,14 @@ import (
 )
 
 func main() {
+	config, err := LoadConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := config.Save(); err != nil {
+		log.Fatal(err)
+	}
+
 	if err := sdl.Init(sdl.INIT_VIDEO | sdl.INIT_EVENTS); err != nil {
 		log.Fatal(err)
 	}
@@ -24,7 +32,7 @@ func main() {
 	}
 	defer renderer.Destroy()
 
-	timer := NewFrameTimer(60)
+	timer := NewFrameTimer(config.FPS)
 	for {
 		done := false
 		for !done {
