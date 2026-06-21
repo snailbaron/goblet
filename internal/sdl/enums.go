@@ -656,8 +656,8 @@ func ScancodeToKeycode(scancode Scancode) Keycode {
 }
 
 const (
-	SDLK_EXTENDED_MASK        Keycode = (1 << 29)
-	SDLK_SCANCODE_MASK        Keycode = (1 << 30)
+	SDLK_EXTENDED_MASK        Keycode = 1 << 29
+	SDLK_SCANCODE_MASK        Keycode = 1 << 30
 	SDLK_UNKNOWN              Keycode = 0x00000000 // 0
 	SDLK_RETURN               Keycode = 0x0000000d // '\r'
 	SDLK_ESCAPE               Keycode = 0x0000001b // '\x1B'
@@ -1042,9 +1042,9 @@ const (
 // [<SDL3/SDL_gamepad.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gamepad.h
 type GamepadAxis uint8
 
+const GAMEPAD_AXIS_INVALID GamepadAxis = math.MaxUint8
 const (
-	GAMEPAD_AXIS_INVALID GamepadAxis = math.MaxUint8
-	GAMEPAD_AXIS_LEFTX   GamepadAxis = iota
+	GAMEPAD_AXIS_LEFTX GamepadAxis = iota
 	GAMEPAD_AXIS_LEFTY
 	GAMEPAD_AXIS_RIGHTX
 	GAMEPAD_AXIS_RIGHTY
@@ -1081,8 +1081,8 @@ const (
 // [<SDL3/SDL_gamepad.h>]: https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gamepad.h
 type GamepadButton uint8
 
+const GAMEPAD_BUTTON_INVALID GamepadButton = math.MaxUint8
 const (
-	GAMEPAD_BUTTON_INVALID GamepadButton = math.MaxUint8
 	// Bottom face button (e.g. Xbox A button).
 	GAMEPAD_BUTTON_SOUTH GamepadButton = iota
 	// Right face button (e.g. Xbox B button).

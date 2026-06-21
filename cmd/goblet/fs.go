@@ -8,7 +8,7 @@ import (
 
 func writeFileAtomically(data []byte, path string) error {
 	dir := filepath.Dir(path)
-	if err := os.MkdirAll(dir, 0755); err != nil {
+	if err := os.MkdirAll(dir, 0750); err != nil {
 		return err
 	}
 
@@ -22,11 +22,7 @@ func writeFileAtomically(data []byte, path string) error {
 		_ = os.Remove(tempFile.Name())
 	}()
 
-	if err := os.Chmod(tempFile.Name(), 0644); err != nil {
-		return err
-	}
-
-	if err := os.WriteFile(tempFile.Name(), data, 0644); err != nil {
+	if _, err := tempFile.Write(data); err != nil {
 		return err
 	}
 

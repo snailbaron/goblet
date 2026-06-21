@@ -20,7 +20,8 @@ func main() {
 	}
 	defer sdl.Quit()
 
-	window, err := sdl.CreateWindow("Goblet", 800, 600, 0)
+	window, err := sdl.CreateWindow(
+		"Goblet", config.WindowWidth, config.WindowHeight, 0)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -58,7 +59,10 @@ func main() {
 		}
 
 		if framesPassed := timer.Cutoff(); framesPassed > 0 {
-			if err := renderer.SetDrawColor(30, 30, 30, 255); err != nil {
+			r, g, b, a := config.BackgroundColor[0],
+				config.BackgroundColor[1], config.BackgroundColor[2],
+				config.BackgroundColor[3]
+			if err := renderer.SetDrawColor(r, g, b, a); err != nil {
 				log.Panic(err)
 			}
 			if err := renderer.Clear(); err != nil {

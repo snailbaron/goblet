@@ -23,7 +23,18 @@ func ConfigPath() string {
 }
 
 type Config struct {
-	FPS int `json:"fps"`
+	FPS             int      `json:"fps"`
+	WindowWidth     int      `json:"window_width"`
+	WindowHeight    int      `json:"window_height"`
+	BackgroundColor [4]uint8 `json:"background_color"`
+}
+
+//nolint:mnd
+var defaultConfig = Config{
+	FPS:             60,
+	WindowWidth:     800,
+	WindowHeight:    600,
+	BackgroundColor: [4]uint8{30, 30, 30, 255},
 }
 
 func LoadConfig() (*Config, error) {
@@ -31,7 +42,7 @@ func LoadConfig() (*Config, error) {
 }
 
 func LoadConfigFromFile(path string) (*Config, error) {
-	bs, err := os.ReadFile(path)
+	bs, err := os.ReadFile(filepath.Clean(path))
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
 			bs = []byte("{}")
@@ -40,13 +51,9 @@ func LoadConfigFromFile(path string) (*Config, error) {
 		}
 	}
 
-	var c Config
+	c := defaultConfig
 	if err := json.Unmarshal(bs, &c); err != nil {
 		return nil, err
-	}
-
-	if c.FPS == 0 {
-		c.FPS = 60
 	}
 
 	return &c, nil

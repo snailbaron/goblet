@@ -132,6 +132,7 @@ func (rr *Renderer) LoadTexture(file string) (*Texture, error) {
 	if t == nil {
 		return nil, getError()
 	}
+
 	return &Texture{ptr: t}, nil
 }
 
