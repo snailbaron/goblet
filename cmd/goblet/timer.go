@@ -12,6 +12,7 @@ func NewFrameTimer(fps int) *FrameTimer {
 	return &FrameTimer{
 		frameDuration: time.Duration(time.Second) / time.Duration(fps),
 		startTime:     time.Now(),
+		lastFrame:     0,
 	}
 }
 

@@ -1166,6 +1166,7 @@ func convertEvent(cEvent *C.SDL_Event) *Event {
 			Type:      EventType(cCommonEvent._type),
 			Timestamp: uint64(cCommonEvent.timestamp),
 		},
+		internal: nil,
 	}
 	t := result.Type
 

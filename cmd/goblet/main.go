@@ -9,26 +9,26 @@ import (
 func main() {
 	config, err := LoadConfig()
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 	if err := config.Save(); err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 
 	if err := sdl.Init(sdl.INIT_VIDEO | sdl.INIT_EVENTS); err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 	defer sdl.Quit()
 
 	window, err := sdl.CreateWindow("Goblet", 800, 600, 0)
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 	defer window.Destroy()
 
 	renderer, err := window.CreateRenderer()
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 	defer renderer.Destroy()
 
@@ -49,6 +49,7 @@ func main() {
 				if k.Key == sdl.SDLK_ESCAPE {
 					done = true
 				}
+			default:
 			}
 		}
 
@@ -58,13 +59,13 @@ func main() {
 
 		if framesPassed := timer.Cutoff(); framesPassed > 0 {
 			if err := renderer.SetDrawColor(30, 30, 30, 255); err != nil {
-				log.Fatal(err)
+				log.Panic(err)
 			}
 			if err := renderer.Clear(); err != nil {
-				log.Fatal(err)
+				log.Panic(err)
 			}
 			if err := renderer.Present(); err != nil {
-				log.Fatal(err)
+				log.Panic(err)
 			}
 		}
 

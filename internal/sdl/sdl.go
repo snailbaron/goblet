@@ -137,7 +137,7 @@ func (rr *Renderer) LoadTexture(file string) (*Texture, error) {
 
 func PollEvent() (*Event, bool) {
 	var e C.SDL_Event
-	if !C.SDL_PollEvent(&e) {
+	if !C.SDL_PollEvent(&e) { //nolint:gocritic
 		return nil, false
 	}
 	return convertEvent(&e), true
